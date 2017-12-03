@@ -55,7 +55,6 @@ public class SetPreferencesActivity extends AppCompatActivity {
         mDatabase.child("/Account/").child(key + "/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("PRINTINGGGGGGGG: " + (snapshot.getValue()));
                 JSONObject allPrefs, dietPrefs, allergyPrefs;
                 try {
                     allPrefs = new JSONObject(snapshot.getValue().toString());
@@ -92,7 +91,6 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
     private void updatePrefsToFirebase(){
         String key = SharedConstants.FIREBASE_USER_ID;//mDatabase.child("Account").push().getKey();
-        System.out.println(key);
         Map<String, Object> childUpdates = new HashMap<>();
 
         Map<String, Object> postDietValues = new HashMap<>();

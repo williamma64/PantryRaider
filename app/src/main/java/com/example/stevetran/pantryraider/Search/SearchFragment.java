@@ -21,8 +21,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.stevetran.pantryraider.R;
+<<<<<<< HEAD
 import com.example.stevetran.pantryraider.Search.Recipes.Recipe;
 import com.example.stevetran.pantryraider.Search.Recipes.RecipeActivity;
+=======
+import com.example.stevetran.pantryraider.Util.SharedConstants;
+>>>>>>> origin/sunmorn
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +77,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(SearchFragment.this.getActivity(), RecipeActivity.class);
                 myIntent.putExtra("rid", rid.get((int)id));
+                String key = SharedConstants.FIREBASE_USER_ID;
+                myIntent.putExtra("uid", key);
                 SearchFragment.this.getActivity().startActivity(myIntent);
             }
         });
@@ -115,8 +121,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                         JSONObject json = null;
                         try {
                             json = new JSONObject(response);
-                            JSONArray recipes = json.getJSONArray("recipes");
-
+                            JSONArray recipes = json.getJSONArray("results");
+                            Log.d("a", "hey"+recipes);
                             for(int i = 0; i < recipes.length(); i++) {
 
                                 Recipe recipe = new Recipe();
