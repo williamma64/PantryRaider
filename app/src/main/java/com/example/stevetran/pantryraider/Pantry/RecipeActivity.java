@@ -159,8 +159,6 @@ public class RecipeActivity extends AppCompatActivity {
 
     public void saveToDB(View view){
         String key = SharedConstants.FIREBASE_USER_ID;
-        System.out.println(key);
-
         mDatabase.child("/Saved Recipes/").child(key+"/").child(rid + "/").setValue(name);
 
     }

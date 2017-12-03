@@ -53,7 +53,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Desired Password"
+                    android:hint="password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -69,19 +69,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold"
-                android:onClick="loginPressed" />
+                android:background="@android:color/holo_orange_dark"
+                android:onClick="loginPressed"
+                android:text="Sign In"
+                android:textStyle="bold" />
+
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/sign_up_button"
                 style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_up"
-                android:textStyle="bold"
-                android:onClick="signUpPressed" />
-                />
+                android:background="@android:color/holo_orange_dark"
+                android:onClick="signUpPressed"
+                android:text="Sign Up"
+                android:textStyle="bold" />
+            />
 
         </LinearLayout>
     </ScrollView>
