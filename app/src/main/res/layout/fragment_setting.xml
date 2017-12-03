@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:weightSum="1">
+
+<TextView
+    android:text="Settings"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:id="@+id/settingsView"
+    android:textAlignment="center"
+    android:textSize="28sp" />
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="370dp"
+    android:layout_weight="1.02">
+
+    <Button
+        android:text="Change Password"
+        android:layout_height="wrap_content"
+        android:id="@+id/changePasswordButton"
+        android:background="@android:color/holo_orange_dark"
+        android:onClick="changePWPressed"
+        android:layout_width="227dp"
+        android:layout_marginTop="39dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Set Preferences"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:id="@+id/setPreferencesButton"
+        android:layout_marginTop="73dp"
+        android:layout_below="@+id/changePasswordButton"
+        android:layout_alignStart="@+id/changePasswordButton" />
+
+    <Button
+        android:text="Change Themes"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:id="@+id/changeThemes"
+        android:layout_marginTop="77dp"
+        android:layout_below="@+id/setPreferencesButton"
+        android:layout_alignStart="@+id/setPreferencesButton" />
+
+    <Button
+        android:text="Sign Out"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:id="@+id/signOutButton"
+        android:layout_marginTop="77dp"
+        android:layout_below="@+id/changeThemes"
+        android:layout_alignStart="@+id/changeThemes" />
+</RelativeLayout>
+
+</LinearLayout>
