@@ -79,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mAuth.getCurrentUser();
         if (mAuth.getCurrentUser() != null) {
+            SharedConstants.FIREBASE_USER_ID = mAuth.getCurrentUser().getUid();
             Intent goToHome = new Intent(this, HomeActivity.class);
             startActivity(goToHome);
             Toast.makeText(LoginActivity.this, "Logged In As: " + mAuth.getCurrentUser().getEmail(),
