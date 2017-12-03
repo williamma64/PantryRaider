@@ -1,4 +1,4 @@
-package com.example.stevetran.pantryraider.Pantry;
+package com.example.stevetran.pantryraider.Pantry.SavedRecipe;
 
 import android.content.Context;
 
@@ -7,16 +7,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SavedRecipe {
+public class SavedRecipe implements Serializable {
 
     public String title;
     public String description;
     public String imageUrl;
     public String instructionUrl;
     public String label;
-    public String rid;
+    public int rid;
 
     public static ArrayList<SavedRecipe> getRecipesFromFile(String filename, Context context){
         final ArrayList<SavedRecipe> recipeList = new ArrayList<>();
@@ -36,7 +37,7 @@ public class SavedRecipe {
                 recipe.imageUrl = recipes.getJSONObject(i).getString("image");
                 recipe.instructionUrl = recipes.getJSONObject(i).getString("url");
                 recipe.label = recipes.getJSONObject(i).getString("dietLabel");
-
+                recipe.rid = recipes.getJSONObject(i).getInt("rid");
                 recipeList.add(recipe);
             }
         } catch (JSONException e) {

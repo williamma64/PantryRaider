@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.stevetran.pantryraider.Pantry.Ingredients.Ingredient;
 import com.example.stevetran.pantryraider.R;
 
 import java.util.ArrayList;

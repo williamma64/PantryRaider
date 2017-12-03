@@ -1,4 +1,4 @@
-package com.example.stevetran.pantryraider.Pantry;
+package com.example.stevetran.pantryraider.Pantry.Ingredients;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.stevetran.pantryraider.R;
-import com.example.stevetran.pantryraider.Search.SearchFragment;
 import com.example.stevetran.pantryraider.Util.SectionsPagerAdapter;
 
 

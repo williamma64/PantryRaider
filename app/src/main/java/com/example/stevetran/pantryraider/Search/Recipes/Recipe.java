@@ -1,4 +1,4 @@
-package com.example.stevetran.pantryraider.Pantry;
+package com.example.stevetran.pantryraider.Search.Recipes;
 
 /**
  * Created by rongfalu on 11/28/17.

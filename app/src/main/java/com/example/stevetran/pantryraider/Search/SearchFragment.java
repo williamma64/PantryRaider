@@ -20,9 +20,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.stevetran.pantryraider.Pantry.Recipe;
-import com.example.stevetran.pantryraider.Pantry.RecipeActivity;
 import com.example.stevetran.pantryraider.R;
+import com.example.stevetran.pantryraider.Search.Recipes.Recipe;
+import com.example.stevetran.pantryraider.Search.Recipes.RecipeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

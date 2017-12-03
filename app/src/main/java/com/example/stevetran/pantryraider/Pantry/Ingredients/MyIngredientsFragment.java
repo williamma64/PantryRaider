@@ -1,4 +1,4 @@
-package com.example.stevetran.pantryraider.Pantry;
+package com.example.stevetran.pantryraider.Pantry.Ingredients;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.example.stevetran.pantryraider.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by William Ma on 11/17/2017.

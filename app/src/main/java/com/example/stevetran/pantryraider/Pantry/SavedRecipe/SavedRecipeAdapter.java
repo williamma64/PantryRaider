@@ -1,4 +1,4 @@
-package com.example.stevetran.pantryraider.Pantry;
+package com.example.stevetran.pantryraider.Pantry.SavedRecipe;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,14 +14,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by rongfalu on 11/28/17.
+ * Created by Abel on 11/19/2017.
  */
-public class RecipeAdapter extends BaseAdapter {
+
+public class SavedRecipeAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<SavedRecipe> mDataSource;
 
-    public RecipeAdapter(Context context, ArrayList<SavedRecipe> items) {
+    public SavedRecipeAdapter(Context context, ArrayList<SavedRecipe> items) {
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

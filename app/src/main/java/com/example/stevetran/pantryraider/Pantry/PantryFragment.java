@@ -1,6 +1,5 @@
 package com.example.stevetran.pantryraider.Pantry;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.stevetran.pantryraider.R;
 
@@ -41,16 +41,18 @@ public class PantryFragment extends Fragment implements View.OnClickListener{
             case R.id.savedRecipeButton:
                 ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
                 viewPager.setCurrentItem(1);
+                //set up a new title
+                TextView mTitle = (TextView) getActivity().findViewById(R.id.toolbar_title);
+                mTitle.setText("Saved Recipes");
                 break;
-//            case R.id.myIngredientsButton:
-//                ViewPager viewPager2 = (ViewPager) getActivity().findViewById((R.id.container);
-//                viewPager2.setCurrentItem(2);
-//                break;
             case R.id.myIngredientsButton:
                 //Intent ingriIntent = new Intent(getActivity(), MyIngredientsActivity.class);
                 //startActivity(ingriIntent);
                 ViewPager viewPager2 = (ViewPager) getActivity().findViewById(R.id.container);
                 viewPager2.setCurrentItem(2);
+                //set up a new title
+                TextView mTitle2 = (TextView) getActivity().findViewById(R.id.toolbar_title);
+                mTitle2.setText("My Ingredients");
                 break;
         }
     }

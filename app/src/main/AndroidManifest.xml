@@ -23,11 +23,11 @@
         <activity android:name=".Setting.SettingActivity"></activity>
         <activity android:name=".Setting.ChangePasswordActivity"></activity>
         <activity android:name=".Setting.SetPreferencesActivity"></activity>
-        <activity android:name=".Pantry.MyIngredientsActivity"></activity>
+        <activity android:name=".Pantry.Ingredients.MyIngredientsActivity"></activity>
         <activity android:name=".Login.LoginActivity"></activity>
         <activity android:name=".Login.SignUpActivity"></activity>
-        <activity android:name=".Pantry.RecipeActivity"></activity>
-        <activity android:name=".Pantry.IngredientAddActivity"></activity>
+        <activity android:name=".Search.Recipes.RecipeActivity"></activity>
+        <activity android:name=".Pantry.Ingredients.IngredientAddActivity"></activity>
     </application>
 
 </manifest>

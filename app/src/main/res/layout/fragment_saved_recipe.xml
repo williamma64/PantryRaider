@@ -6,19 +6,10 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="0.06"
-        android:gravity="center_vertical|center"
-        android:text="Saved Recipes"
-        android:textSize="23dp" />
-
     <ListView
         android:id="@+id/SavedRecipeList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginBottom="50dp"/>
+
 </LinearLayout>

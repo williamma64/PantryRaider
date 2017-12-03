@@ -1,13 +1,11 @@
-package com.example.stevetran.pantryraider.Setting;
+package com.example.stevetran.pantryraider.Pantry.Ingredients;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.BottomNavigationHelper;
@@ -15,49 +13,29 @@ import com.example.stevetran.pantryraider.Util.SectionsPagerAdapter;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 /**
- * Created by Abel on 11/14/2017.
+ * Created by William Ma on 11/30/2017.
  */
 
-public class SettingActivity extends AppCompatActivity {
-    private static final int ACTIVITY_NUM = 3;
-    private Context mContext = SettingActivity.this;
+public class IngredientAddActivity extends AppCompatActivity {
+    private static final int ACTIVITY_NUM = 2;
+    private Context mContext = IngredientAddActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        //set up the bottom navigation view
+        setContentView(R.layout.activity_add_ingredient);
         setupBottomNavigationView();
-        //set up view pager for the fragments
         setupViewPager();
-        setupToolBar();
     }
 
-    /**
-     * setupToolBar
-     */
-    private void setupToolBar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tabs);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-
-        setSupportActionBar(toolbar);
-        mTitle.setText("Setting");
-
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
-    private void setupViewPager(){
+    private void setupViewPager() {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SettingFragment());
-//        adapter.addFragment(new SetPreferencesFragment());
-        ViewPager viewPager = (ViewPager) findViewById(R.id.container); //from layout_center_viewpager
+        adapter.addFragment(new IngredientSearchFragment());
+        ViewPager viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(adapter);
     }
 
-    /**
-     * BottomNavigationView setup
-     */
-    private void setupBottomNavigationView(){
+    private void setupBottomNavigationView() {
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
         BottomNavigationHelper.setupBottomNavigationView(bottomNavigationViewEx);
         BottomNavigationHelper.enableNavigation(mContext, bottomNavigationViewEx, this);

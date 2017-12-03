@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.stevetran.pantryraider.Pantry.MyIngredientsFragment">
+    tools:context="com.example.stevetran.pantryraider.Pantry.Ingredients.MyIngredientsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
