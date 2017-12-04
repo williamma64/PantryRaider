@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Search.Recipes.RecipeActivity;
+import com.example.stevetran.pantryraider.Util.SharedConstants;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
 public class SavedRecipeListFragment extends Fragment {
     View view;
-    private ListView SavedRecipeList;
+    private ListView savedRecipeList;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_saved_recipe, container, false);
@@ -52,18 +53,19 @@ public class SavedRecipeListFragment extends Fragment {
     }
 
     private void inflateListView(){
-        SavedRecipeList = (ListView) view.findViewById(R.id.SavedRecipeList);
+        savedRecipeList = (ListView) view.findViewById(R.id.SavedRecipeList);
         final ArrayList<SavedRecipe> recipeList = SavedRecipe.getRecipesFromFile("recipes.json", getActivity());
 
         SavedRecipeAdapter adapter = new SavedRecipeAdapter(getActivity(), recipeList);
-        SavedRecipeList.setAdapter(adapter);
-        SavedRecipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        savedRecipeList.setAdapter(adapter);
+        savedRecipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SavedRecipe recipe = (SavedRecipe)SavedRecipeList.getItemAtPosition(position);
-                Intent intent = new Intent(getActivity(), RecipeActivity.class);
-                intent.putExtra("rid", "30000");
-                startActivity(intent);
+                Intent myIntent = new Intent(getActivity(), RecipeActivity.class);
+                myIntent.putExtra("rid", recipeList.get((int)id).rid);
+                String key = SharedConstants.FIREBASE_USER_ID;
+                myIntent.putExtra("uid", key);
+                getActivity().startActivity(myIntent);
             }
         });
     }

@@ -150,7 +150,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     public void saveToDB(View view){
         String key = SharedConstants.FIREBASE_USER_ID;
-        mDatabase.child("/Saved Recipes/").child(key+"/").child(rid + "/").setValue(name);
+        mDatabase.child("/Saved_Recipes/").child(key+"/").child(rid + "/").setValue(name);
 
     }
 

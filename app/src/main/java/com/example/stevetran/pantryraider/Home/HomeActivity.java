@@ -2,6 +2,7 @@ package com.example.stevetran.pantryraider.Home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.BottomNavigationHelper;
+import com.example.stevetran.pantryraider.Util.SectionsPagerAdapter;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 /**
@@ -27,18 +29,24 @@ public class HomeActivity extends AppCompatActivity {
         //set up the bottom navigation view
         setupBottomNavigationView();
         //set up view pager for the fragments
-//        setupViewPager();
         setupToolBar();
+        setupViewPager();
     }
-    private void setupToolBar(){
+    private void setupToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tabs);
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-
         setSupportActionBar(toolbar);
         mTitle.setText("Explore");
-
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+    private void setupViewPager(){
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new HomeFragment());
+//        adapter.addFragment(new SetPreferencesFragment());
+        ViewPager viewPager = (ViewPager) findViewById(R.id.container); //from layout_center_viewpager
+        viewPager.setAdapter(adapter);
+    }
+
     /**
      * BottomNavigationView setup
      */

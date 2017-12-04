@@ -52,11 +52,11 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            if (!user.isEmailVerified()) {
+                            /* if (!user.isEmailVerified()) {
                                 Toast.makeText(LoginActivity.this, "E-mail Not Verified",
                                         Toast.LENGTH_SHORT).show();
                                 return;
-                            }
+                            } */
                             SharedConstants.FIREBASE_USER_ID = user.getUid();
                             //System.out.println("$$$$$$$$$$$$$$$$$$$: " + user.getUid());
                             startActivity(goToHome);

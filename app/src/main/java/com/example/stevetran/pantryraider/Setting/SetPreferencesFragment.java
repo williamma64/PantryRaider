@@ -149,7 +149,6 @@ public class SetPreferencesFragment extends Fragment {
 
         childUpdates.put("/Account/" + key + "/Preferences/", postDietValues);
         childUpdates.put("/Account/" + key + "/Allergies/", postAllergyValues);
-
         mDatabase.updateChildren(childUpdates);
     }
 }
