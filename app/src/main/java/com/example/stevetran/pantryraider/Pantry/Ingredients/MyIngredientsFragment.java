@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.stevetran.pantryraider.Pantry.IngredientAddActivity;
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.SharedConstants;
 import com.google.firebase.database.DataSnapshot;
