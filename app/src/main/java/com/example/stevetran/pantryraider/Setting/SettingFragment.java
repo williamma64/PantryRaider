@@ -1,13 +1,16 @@
+
 package com.example.stevetran.pantryraider.Setting;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.stevetran.pantryraider.Login.LoginActivity;
 import com.example.stevetran.pantryraider.R;
@@ -45,12 +48,18 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.changePasswordButton:
-                Intent pwIntent = new Intent(getActivity(), ChangePasswordActivity.class);
-                startActivity(pwIntent);
+                ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
+                viewPager.setCurrentItem(1);
+                //set up a new title
+                TextView mTitle = (TextView) getActivity().findViewById(R.id.toolbar_title);
+                mTitle.setText("Change Password");
                 break;
             case R.id.setPreferencesButton:
-                Intent spIntent = new Intent(getActivity(), SetPreferencesActivity.class);
-                startActivity(spIntent);
+                ViewPager viewPager2 = (ViewPager) getActivity().findViewById(R.id.container);
+                viewPager2.setCurrentItem(2);
+                //set up a new title
+                TextView mTitle2 = (TextView) getActivity().findViewById(R.id.toolbar_title);
+                mTitle2.setText("Set Preferences");
                 break;
             case R.id.signOutButton:
                 FirebaseAuth mAuth;

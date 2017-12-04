@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.stevetran.pantryraider.Setting.SetPreferencesActivity">
+    tools:context="com.example.stevetran.pantryraider.Setting.SetPreferencesFragment">
 
     <TextView
         android:text="Lifestyle Preferences:"
@@ -171,8 +171,7 @@
             android:backgroundTint="@android:color/holo_orange_dark"
             android:layout_marginTop="39dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:onClick="updatePreferencesClicked" />
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 
 

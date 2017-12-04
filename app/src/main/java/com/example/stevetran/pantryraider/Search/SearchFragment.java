@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.stevetran.pantryraider.R;
-<<<<<<< HEAD
 import com.example.stevetran.pantryraider.Search.Recipes.Recipe;
 import com.example.stevetran.pantryraider.Search.Recipes.RecipeActivity;
-=======
 import com.example.stevetran.pantryraider.Util.SharedConstants;
->>>>>>> origin/sunmorn
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +56,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
-
+        //overwrite back button behaivor
+        setupBackButton(view);
         //set up buttons
         searchButton = (Button) view.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(this);
@@ -160,5 +159,19 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+    }
+    public void setupBackButton(View view) {
+        //overwrites default backbutton
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if( keyCode == KeyEvent.KEYCODE_BACK) {
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

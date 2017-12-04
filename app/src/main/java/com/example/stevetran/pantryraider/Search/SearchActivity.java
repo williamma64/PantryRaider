@@ -4,16 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.BottomNavigationHelper;
 import com.example.stevetran.pantryraider.Util.SectionsPagerAdapter;
@@ -38,6 +34,19 @@ public class SearchActivity extends AppCompatActivity {
         //set up view pager for the fragments
         setupViewPager();
         Log.d("A", "oncreate2");
+        setupToolBar();
+    }
+    /**
+     * setupToolBar
+     */
+    private void setupToolBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tabs);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+
+        setSupportActionBar(toolbar);
+        mTitle.setText("Search");
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
     /**
      * start fragments
