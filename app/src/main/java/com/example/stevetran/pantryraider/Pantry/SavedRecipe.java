@@ -118,7 +118,7 @@ public class SavedRecipe {
                                              final ArrayList<SavedRecipe> recipeList,
                                              final Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url ="http://107.21.6.189:8080/get_recipes_bulk";
+        String url ="http://54.175.239.59:8080/get_recipes_bulk";
 
         Log.d(null, "GOT HERE 3 !!!!!!!!! ");
         // Request a string response from the provided URL.

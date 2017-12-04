@@ -32,7 +32,6 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -54,18 +53,22 @@ public class RecipeActivity extends AppCompatActivity {
     //private View = R.layout.activity_recipe;
     private ImageView mImage;
     private TextView mName;
-    private ListView mInstructions;
+    private ListView mListIngredients;
+    private ListView mSteps;
 
     private String image_url = "https://spoonacular.com/recipeImages/615348-556x370.jpg";
     private String name = "What";
 
     private String rid;
-    private String uid;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> ListInstructions = new ArrayList<>();
+
+    ArrayAdapter<String> adapter_ingredinets;
+    ArrayAdapter<String> adapter_steps;
+    ArrayList<String> ListIngredients = new ArrayList<>();
+    ArrayList<String> Steps = new ArrayList<>();
 
     private DatabaseReference mDatabase;
     private DatabaseReference relPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,29 +78,37 @@ public class RecipeActivity extends AppCompatActivity {
 
         Intent myIntent = getIntent();
         rid = myIntent.getStringExtra("rid");
-        uid = myIntent.getStringExtra("uid");
 
-        makeRequest(rid, uid);
+        makeRequest(rid);
 
         setContentView(R.layout.activity_recipe);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         mImage = findViewById(R.id.image_detail);
         mName = findViewById(R.id.recipename_detail);
-        mInstructions = findViewById(R.id.InstructionList_detail);
+        mListIngredients = findViewById(R.id.IngredientList_detail);
+        mSteps = findViewById(R.id.Steps);
 
-        adapter = new ArrayAdapter<String>(
+        adapter_ingredinets = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                ListInstructions
+                ListIngredients
         );
-        mInstructions.setAdapter(adapter);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mListIngredients.setAdapter(adapter_ingredinets);
+
+        adapter_steps = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                Steps
+        );
+        mSteps.setAdapter(adapter_steps);
 
     }
 
-    private void makeRequest(final String rid, final String uid) {
+    private void makeRequest(final String rid) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://107.21.6.189:8080/recipe_detail";
+        String url ="http://54.175.239.59:8080/recipe_detail";
 
 
         // Request a string response from the provided URL.
@@ -112,25 +123,23 @@ public class RecipeActivity extends AppCompatActivity {
 
                             image_url = json.getString("image_url");
                             name = json.getString("title");
-                            /*JSONArray ing = json.getJSONArray("ingredients");
-                            JSONArray ins = json.getJSONArray("instructions");
-
-                            ListInstructions.add("INGREDIENTS:");
+                            JSONArray ing = json.getJSONArray("ingredients");
                             for(int i = 0; i < ing.length(); i++) {
-                                ListInstructions.add(ing.getString(i));
+                                ListIngredients.add(ing.getJSONObject(i).getString("string"));
                             }
-                            ListInstructions.add("\n\nINSTRUCTIONS:");
-                            for(int i = 0; i < ins.length(); i++) {
-                                ListInstructions.add(ins.getJSONObject(i).getString("step"));
-                            }*/
-
+                            JSONArray instructions = json.getJSONArray("instructions");
+                            for(int i = 0; i < instructions.length(); i++) {
+                                Steps.add(instructions.getString(i));
+                            }
                             mName.setText(name);
                             Picasso.with(mContext)
                                     .load(image_url)
                                     .into(mImage);
 
-                            adapter.notifyDataSetChanged();
+                            adapter_ingredinets.notifyDataSetChanged();
+                            adapter_steps.notifyDataSetChanged();
                         } catch (JSONException e) {
+
                             e.printStackTrace();
                         }
 
@@ -146,7 +155,7 @@ public class RecipeActivity extends AppCompatActivity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("rid",rid);
-                //params.put("uid",uid);
+
                 return params;
             }
 
@@ -156,10 +165,12 @@ public class RecipeActivity extends AppCompatActivity {
         queue.add(stringRequest);
 
     }
-
     public void saveToDB(View view){
         String key = SharedConstants.FIREBASE_USER_ID;
-        mDatabase.child("/Saved_Recipes/").child(key+"/").child(rid + "/").setValue(name);
+
+        mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).setValue(name);
+        //mDatabase.child("/Account/"+key+"/Ingredients/").child(ingredient).setValue(ings.get(ingredient));
+
 
     }
 

@@ -118,7 +118,7 @@ public class IngredientSearchFragment extends Fragment implements View.OnClickLi
     }
     private void makeRequest(final String query) {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url = "http://107.21.6.189:8080/auto_ingredients";
+        String url = "http://54.175.239.59:8080/auto_ingredients";
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

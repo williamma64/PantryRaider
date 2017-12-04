@@ -121,7 +121,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     public void makeRequest() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = "http://107.21.6.189:8080/explore";
+        String url = "http://54.175.239.59:8080/explore";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

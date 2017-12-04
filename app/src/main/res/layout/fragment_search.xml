@@ -12,34 +12,32 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/CPoldpassword"
+        android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:hint="Search Recipe..."
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:id="@+id/button2"
+        android:text="Add Filter"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/CPoldpassword"
-        android:background="@android:color/holo_orange_dark"
-        android:text="Add Filter" />
+        android:id="@+id/filterBtn"
+        android:layout_below="@+id/editText2"
+        android:layout_alignParentStart="true" />
 
     <Button
+        android:text="Search"
+        android:layout_height="wrap_content"
         android:id="@+id/searchButton"
         android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/CPoldpassword"
-        android:background="@android:color/holo_orange_dark"
-        android:text="Search" />
+        android:layout_below="@+id/editText2"
+        android:layout_alignParentEnd="true" />
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/button2"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/filterBtn" />
 
 </RelativeLayout>
