@@ -1,4 +1,4 @@
-package com.example.stevetran.pantryraider.Pantry.Ingredients;
+package com.example.stevetran.pantryraider.Pantry;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.stevetran.pantryraider.Pantry.Ingredients.IngredientSearchFragment;
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.BottomNavigationHelper;
 import com.example.stevetran.pantryraider.Util.SectionsPagerAdapter;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,10 +20,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.BottomNavigationHelper;
+import com.example.stevetran.pantryraider.Util.SharedConstants;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,14 +45,18 @@ public class RecipeActivity extends AppCompatActivity {
     //private View = R.layout.activity_recipe;
     private ImageView mImage;
     private TextView mName;
-    private ListView mListIngredients;
+    private ListView mInstructions;
 
     private String image_url = "https://spoonacular.com/recipeImages/615348-556x370.jpg";
     private String name = "What";
 
-
+    private String rid;
+    private String uid;
     ArrayAdapter<String> adapter;
-    ArrayList<String> ListIngredients = new ArrayList<>();
+    ArrayList<String> ListInstructions = new ArrayList<>();
+
+    private DatabaseReference mDatabase;
+    private DatabaseReference relPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,26 +65,28 @@ public class RecipeActivity extends AppCompatActivity {
         //setupBottomNavigationView();
 
         Intent myIntent = getIntent();
-        String rid = myIntent.getStringExtra("rid");
+        rid = myIntent.getStringExtra("rid");
+        uid = myIntent.getStringExtra("uid");
 
-        makeRequest(rid);
+        makeRequest(rid, uid);
 
         setContentView(R.layout.activity_recipe);
 
         mImage = findViewById(R.id.image_detail);
         mName = findViewById(R.id.recipename_detail);
-        mListIngredients = findViewById(R.id.IngredientList_detail);
+        mInstructions = findViewById(R.id.InstructionList_detail);
 
         adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                ListIngredients
+                ListInstructions
         );
-        mListIngredients.setAdapter(adapter);
+        mInstructions.setAdapter(adapter);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
     }
 
-    private void makeRequest(final String rid) {
+    private void makeRequest(final String rid, final String uid) {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://107.21.6.189:8080/recipe_detail";
 
@@ -94,10 +103,18 @@ public class RecipeActivity extends AppCompatActivity {
 
                             image_url = json.getString("image_url");
                             name = json.getString("title");
-                            JSONArray ing = json.getJSONArray("ingredients");
+                            /*JSONArray ing = json.getJSONArray("ingredients");
+                            JSONArray ins = json.getJSONArray("instructions");
+
+                            ListInstructions.add("INGREDIENTS:");
                             for(int i = 0; i < ing.length(); i++) {
-                                ListIngredients.add(ing.getString(i));
+                                ListInstructions.add(ing.getString(i));
                             }
+                            ListInstructions.add("\n\nINSTRUCTIONS:");
+                            for(int i = 0; i < ins.length(); i++) {
+                                ListInstructions.add(ins.getJSONObject(i).getString("step"));
+                            }*/
+
                             mName.setText(name);
                             Picasso.with(mContext)
                                     .load(image_url)
@@ -120,7 +137,7 @@ public class RecipeActivity extends AppCompatActivity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("rid",rid);
-
+                //params.put("uid",uid);
                 return params;
             }
 
@@ -128,6 +145,12 @@ public class RecipeActivity extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+
+    }
+
+    public void saveToDB(View view){
+        String key = SharedConstants.FIREBASE_USER_ID;
+        mDatabase.child("/Saved Recipes/").child(key+"/").child(rid + "/").setValue(name);
 
     }
 

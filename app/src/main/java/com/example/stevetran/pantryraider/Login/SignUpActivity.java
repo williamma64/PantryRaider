@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 
 /**
  * Created by rongfalu on 11/21/17.
@@ -33,14 +35,23 @@ import com.google.firebase.database.ValueEventListener;
 
 class User {
     public String uid;
-    public int preference;
-    public int allergy;
+    //public int preference;
+    //public int allergy;
+    public HashMap<String, Object> preference;
+    public HashMap<String, Object> allergy;
+
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
+    /*
     public User(String uid, int preference, int allergy) {
+        this.uid = uid;
+        this.preference = preference;
+        this.allergy = allergy;
+    } */
+    public User(String uid, HashMap preference, HashMap allergy){
         this.uid = uid;
         this.preference = preference;
         this.allergy = allergy;
@@ -67,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void createPressed(View view) {
         final Intent goToHome = new Intent(this, HomeActivity.class);
+        final Intent gotoLogin = new Intent(this, LoginActivity.class);
         EditText emailView = (EditText) findViewById(R.id.input_email);
         String email = emailView.getText().toString();
         EditText passwordView = (EditText) findViewById(R.id.input_password);
@@ -82,9 +94,11 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            Toast.makeText(SignUpActivity.this, "Authentication success.",
-                                    Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            user.sendEmailVerification();
+                            Toast.makeText(SignUpActivity.this, "A Verification E-mail Has Been Sent",
+                                    Toast.LENGTH_SHORT).show();
+                            startActivity(gotoLogin);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -110,13 +124,23 @@ public class SignUpActivity extends AppCompatActivity {
                         });
 
                         // store info to fire base
-                        User user = new User(mAuth.getCurrentUser().getUid(), 0, 0);
+                        //User user = new User(mAuth.getCurrentUser().getUid(), 0, 0);
+                        HashMap<String, Object> map1 = new HashMap<>();
+                        HashMap<String, Object> map2 = new HashMap<>();
+                        User user = new User(mAuth.getCurrentUser().getUid(), map1, map2);
+
 
                         mDatabase.child("Account").child(mAuth.getCurrentUser().getUid()).setValue(user);
 
                         // ...
                     }
                 });
+    }
+
+    public void alreadyMemberLogin(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
 
 

@@ -47,9 +47,12 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            Toast.makeText(LoginActivity.this, "Authentication success.",
-                                    Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            if (!user.isEmailVerified()) {
+                                Toast.makeText(LoginActivity.this, "E-mail Not Verified",
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             SharedConstants.FIREBASE_USER_ID = user.getUid();
                             //System.out.println("$$$$$$$$$$$$$$$$$$$: " + user.getUid());
                             startActivity(goToHome);
@@ -78,7 +81,8 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mAuth.getCurrentUser();
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().isEmailVerified()) {
+            SharedConstants.FIREBASE_USER_ID = mAuth.getCurrentUser().getUid();
             Intent goToHome = new Intent(this, HomeActivity.class);
             startActivity(goToHome);
             Toast.makeText(LoginActivity.this, "Logged In As: " + mAuth.getCurrentUser().getEmail(),

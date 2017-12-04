@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,6 +12,20 @@
     tools:context="com.example.stevetran.pantryraider.Login.LoginActivity">
 
     <!-- Login progress -->
+
+    <TextView
+        android:id="@+id/Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pantry Raider"
+        android:textSize="36sp" />
+
+    <ImageView
+        android:id="@+id/Logo"
+        android:layout_width="match_parent"
+        android:layout_height="239dp"
+        app:srcCompat="@drawable/logo" />
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -53,7 +68,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Desired Password"
+                    android:hint="password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -69,19 +84,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold"
-                android:onClick="loginPressed" />
+                android:background="@android:color/holo_orange_dark"
+                android:onClick="loginPressed"
+                android:text="Sign In"
+                android:textStyle="bold" />
+
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/sign_up_button"
                 style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_up"
-                android:textStyle="bold"
-                android:onClick="signUpPressed" />
-                />
+                android:background="@android:color/holo_orange_dark"
+                android:onClick="signUpPressed"
+                android:text="Sign Up"
+                android:textStyle="bold" />
+            />
 
         </LinearLayout>
     </ScrollView>
