@@ -14,4 +14,15 @@ public class Recipe {
 
     public Recipe(){}
 
+    public String getName() {
+        return this.title;
+    }
+
+    public String getImage_url() {
+        return this.imageUrl;
+    }
+
+    public String getId() {
+        return this.rid;
+    }
 }

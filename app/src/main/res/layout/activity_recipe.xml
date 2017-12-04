@@ -18,26 +18,52 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
         <ImageView
             android:id="@+id/image_detail"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="120dp"
             android:visibility="visible"
             tools:layout_editor_absoluteX="122dp"
             tools:layout_editor_absoluteY="41dp" />
 
-        <!-- bottom navigation -->
-        <ListView
-            android:id="@+id/InstructionList_detail"
+        <TextView
+            android:id="@+id/labelIngredients"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:text="Ingredients" />
+
+        <ListView
+            android:id="@+id/IngredientList_detail"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <TextView
+            android:id="@+id/label_instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:text="Instructions" />
+
+
+        <ListView
+            android:id="@+id/Steps"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
 
         <Button
             android:id="@+id/Save_Button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="28dp"
             android:background="@android:color/holo_orange_dark"
             android:text="Save Recipe"
             android:onClick="saveToDB" />
@@ -45,3 +71,4 @@
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
+

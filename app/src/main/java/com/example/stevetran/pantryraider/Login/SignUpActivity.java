@@ -40,6 +40,7 @@ class User {
     public HashMap<String, Object> Preferences;
     public HashMap<String, Object> Allergies;
     public HashMap<String, Object> Ingredients;
+    public HashMap<String, Object> Saved_Recipes;
 
 
     public User() {
@@ -57,6 +58,10 @@ class User {
         this.Preferences = preference;
         this.Allergies = allergy;
         this.Ingredients = ingredients;
+    }
+
+    public User(String uid, HashMap saved_recipes) {
+        this.Saved_Recipes = saved_recipes;
     }
 
 }
@@ -130,6 +135,7 @@ public class SignUpActivity extends AppCompatActivity {
                         HashMap<String, Object> allergiesMap = new HashMap<>();
                         HashMap<String, Object> prefMap = new HashMap<>();
                         HashMap<String, Object> ingredientsMap = new HashMap<>();
+                        HashMap<String, Object> savedRecipesMap = new HashMap<>();
 
                         allergiesMap.put("dairy", false);
                         allergiesMap.put("egg", false);
@@ -149,11 +155,13 @@ public class SignUpActivity extends AppCompatActivity {
 
                         ingredientsMap.put("dummy", 999999);
 
-                        User user = new User(mAuth.getCurrentUser().getUid(), allergiesMap, prefMap, ingredientsMap);
+                        savedRecipesMap.put("999999", "dummy");
 
+                        User user = new User(mAuth.getCurrentUser().getUid(), allergiesMap, prefMap, ingredientsMap);
+                        User savedRecFBUser = new User(mAuth.getCurrentUser().getUid(), savedRecipesMap);
 
                         mDatabase.child("Account").child(mAuth.getCurrentUser().getUid()).setValue(user);
-                        //mDatabase.child("/Account/" + mAuth.getCurrentUser().getUid() + "/Preferences/").setValue("Dummy");
+                        mDatabase.child("Saved_Recipes").child(mAuth.getCurrentUser().getUid()).setValue(savedRecipesMap);
 
                         // ...
                     }

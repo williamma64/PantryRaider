@@ -24,4 +24,18 @@
     <string-array name="ing_add_results">
         <item></item>
     </string-array>
+    <string-array name="filters">
+        <item>Search by Pantry</item>
+        <item>Types of cuisine</item>
+        <item>Max calories</item>
+    </string-array>
+    <string-array name="cuisine">
+        <item>African</item>
+        <item>Chinese</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Thai</item>
+        <item>Indian</item>
+        <item>British</item>
+    </string-array>
 </resources>
