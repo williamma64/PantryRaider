@@ -16,18 +16,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".Home.HomeActivity"></activity>
-        <activity android:name=".Pantry.PantryActivity"></activity>
-        <activity android:name=".Search.SearchActivity"></activity>
-        <activity android:name=".Setting.SettingActivity"></activity>
-        <activity android:name=".Setting.ChangePasswordActivity"></activity>
-        <activity android:name=".Setting.SetPreferencesActivity"></activity>
-        <activity android:name=".Pantry.Ingredients.MyIngredientsActivity"></activity>
-        <activity android:name=".Login.LoginActivity"></activity>
-        <activity android:name=".Login.SignUpActivity"></activity>
-        <activity android:name=".Search.Recipes.RecipeActivity"></activity>
-        <activity android:name=".Pantry.Ingredients.IngredientAddActivity"></activity>
+        <activity android:name=".Home.HomeActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Pantry.PantryActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Search.SearchActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Setting.SettingActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Pantry.Ingredients.MyIngredientsActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Login.LoginActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Login.SignUpActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Search.Recipes.RecipeActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Pantry.Ingredients.IngredientAddActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

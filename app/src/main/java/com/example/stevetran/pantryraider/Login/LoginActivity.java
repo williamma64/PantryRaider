@@ -39,7 +39,11 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailView.getText().toString();
         EditText passwordView = (EditText) findViewById(R.id.password);
         String password = passwordView.getText().toString();
-
+        if(password.equals("") || email.equals("")) {
+            Toast.makeText(LoginActivity.this, "E-mail/Password cannot be empty!",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

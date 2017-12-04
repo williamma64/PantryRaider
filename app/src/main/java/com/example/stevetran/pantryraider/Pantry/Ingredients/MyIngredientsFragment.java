@@ -1,6 +1,5 @@
 package com.example.stevetran.pantryraider.Pantry.Ingredients;
 
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
 /**
  * Created by William Ma on 11/17/2017.
  */
@@ -97,6 +95,10 @@ public class MyIngredientsFragment extends Fragment implements View.OnClickListe
             public void onDataChange(DataSnapshot snapshot) {
                 // addIngredients is a JSON object storing all ingredients in
                 // the user's pantry, need to populate ListView in 'My Ingredients'
+                if(snapshot.getValue() == null) {
+                    Log.e("Server Error", "onDataChange: snapshot.getValue() is null");
+                    return;
+                }
                 String ingList = snapshot.getValue().toString();
                 ArrayList<String> ingArray = new ArrayList<>();
                 ingList = ingList.substring(1, ingList.length());
