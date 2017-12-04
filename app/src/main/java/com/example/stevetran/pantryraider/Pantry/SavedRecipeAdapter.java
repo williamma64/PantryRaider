@@ -69,7 +69,6 @@ public class SavedRecipeAdapter extends BaseAdapter {
 
         SavedRecipe recipe = (SavedRecipe) getItem(position);
 
-
         titleTextView.setText(recipe.title);
         subtitleTextView.setText(recipe.description);
         detailTextView.setText(recipe.label);

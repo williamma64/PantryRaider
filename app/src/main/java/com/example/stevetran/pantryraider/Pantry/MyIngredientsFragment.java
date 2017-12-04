@@ -104,7 +104,9 @@ public class MyIngredientsFragment extends Fragment implements View.OnClickListe
                 String name = "";
                 for(int i = 0; i < tmp.length; i++) {
                     name = tmp[i].substring(0, tmp[i].indexOf('='));
-                    currIngredients.add(name);
+                    if(!(name.equals("dummy"))){
+                        currIngredients.add(name);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }

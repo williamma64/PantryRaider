@@ -37,8 +37,9 @@ class User {
     public String uid;
     //public int preference;
     //public int allergy;
-    public HashMap<String, Object> preference;
-    public HashMap<String, Object> allergy;
+    public HashMap<String, Object> Preferences;
+    public HashMap<String, Object> Allergies;
+    public HashMap<String, Object> Ingredients;
 
 
     public User() {
@@ -51,10 +52,11 @@ class User {
         this.preference = preference;
         this.allergy = allergy;
     } */
-    public User(String uid, HashMap preference, HashMap allergy){
+    public User(String uid, HashMap preference, HashMap allergy, HashMap ingredients){
         this.uid = uid;
-        this.preference = preference;
-        this.allergy = allergy;
+        this.Preferences = preference;
+        this.Allergies = allergy;
+        this.Ingredients = ingredients;
     }
 
 }
@@ -125,12 +127,33 @@ public class SignUpActivity extends AppCompatActivity {
 
                         // store info to fire base
                         //User user = new User(mAuth.getCurrentUser().getUid(), 0, 0);
-                        HashMap<String, Object> map1 = new HashMap<>();
-                        HashMap<String, Object> map2 = new HashMap<>();
-                        User user = new User(mAuth.getCurrentUser().getUid(), map1, map2);
+                        HashMap<String, Object> allergiesMap = new HashMap<>();
+                        HashMap<String, Object> prefMap = new HashMap<>();
+                        HashMap<String, Object> ingredientsMap = new HashMap<>();
+
+                        allergiesMap.put("dairy", false);
+                        allergiesMap.put("egg", false);
+                        allergiesMap.put("gluten", false);
+                        allergiesMap.put("peanut", false);
+                        allergiesMap.put("seafood", false);
+                        allergiesMap.put("sesame", false);
+                        allergiesMap.put("soy", false);
+                        allergiesMap.put("treenut", false);
+                        allergiesMap.put("wheat", false);
+
+                        prefMap.put("lactovegetarian", false);
+                        prefMap.put("ovovegetarian", false);
+                        prefMap.put("pescetarian", false);
+                        prefMap.put("vegan", false);
+                        prefMap.put("vegetarian", false);
+
+                        ingredientsMap.put("dummy", 999999);
+
+                        User user = new User(mAuth.getCurrentUser().getUid(), allergiesMap, prefMap, ingredientsMap);
 
 
                         mDatabase.child("Account").child(mAuth.getCurrentUser().getUid()).setValue(user);
+                        //mDatabase.child("/Account/" + mAuth.getCurrentUser().getUid() + "/Preferences/").setValue("Dummy");
 
                         // ...
                     }

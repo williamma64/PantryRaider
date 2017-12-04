@@ -117,7 +117,6 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
         childUpdates.put("/Account/" + key + "/Preferences/", postDietValues);
         childUpdates.put("/Account/" + key + "/Allergies/", postAllergyValues);
-
         mDatabase.updateChildren(childUpdates);
     }
 
