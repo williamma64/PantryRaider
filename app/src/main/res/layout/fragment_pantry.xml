@@ -5,37 +5,26 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/buttonMyRecipes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        android:layout_weight="1"
-        android:backgroundTint="@android:color/holo_orange_dark"
-        android:text="My recipes"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
         android:id="@+id/savedRecipeButton"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="55dp"
         android:layout_weight="1"
         android:backgroundTint="@android:color/holo_orange_dark"
         android:text="Saved Recipes"
         android:textAlignment="center"
         android:layout_below="@+id/myIngredientsButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/myIngredientsButton" />
 
     <Button
         android:id="@+id/myIngredientsButton"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:backgroundTint="@android:color/holo_orange_dark"
         android:text="My Ingredients"
-        android:layout_marginTop="31dp"
-        android:layout_below="@+id/buttonMyRecipes"
+        android:layout_marginTop="60dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
 

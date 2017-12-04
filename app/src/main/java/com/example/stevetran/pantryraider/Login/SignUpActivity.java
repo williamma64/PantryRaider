@@ -155,7 +155,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                         ingredientsMap.put("dummy", 999999);
 
-                        savedRecipesMap.put("999999", "dummy");
+                        savedRecipesMap.put("r-1", "-1");
 
                         User user = new User(mAuth.getCurrentUser().getUid(), allergiesMap, prefMap, ingredientsMap);
                         User savedRecFBUser = new User(mAuth.getCurrentUser().getUid(), savedRecipesMap);

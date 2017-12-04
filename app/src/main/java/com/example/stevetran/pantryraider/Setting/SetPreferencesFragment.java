@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.SharedConstants;
@@ -148,6 +150,8 @@ public class SetPreferencesFragment extends Fragment {
 
         childUpdates.put("/Account/" + key + "/Preferences/", postDietValues);
         childUpdates.put("/Account/" + key + "/Allergies/", postAllergyValues);
+        Toast.makeText(getActivity(), "Preferences successfully updated!",
+                Toast.LENGTH_SHORT).show();
         mDatabase.updateChildren(childUpdates);
     }
 }
