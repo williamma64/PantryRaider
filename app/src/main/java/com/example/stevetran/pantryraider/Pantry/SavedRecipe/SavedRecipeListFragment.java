@@ -62,10 +62,10 @@ public class SavedRecipeListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(getActivity(), RecipeActivity.class);
-                myIntent.putExtra("rid", recipeList.get((int)id).rid);
+                myIntent.putExtra("rid", Integer.toString(recipeList.get((int)id).rid));
                 String key = SharedConstants.FIREBASE_USER_ID;
                 myIntent.putExtra("uid", key);
-                getActivity().startActivity(myIntent);
+                startActivity(myIntent);
             }
         });
     }

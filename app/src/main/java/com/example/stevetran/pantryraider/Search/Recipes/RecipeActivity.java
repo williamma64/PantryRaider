@@ -72,7 +72,6 @@ public class RecipeActivity extends AppCompatActivity {
 
         Intent myIntent = getIntent();
         rid = myIntent.getStringExtra("rid");
-
         makeRequest(rid);
 
         setContentView(R.layout.activity_recipe);
