@@ -112,7 +112,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onResponse(String response) {
                         rid.clear();
-                        Log.d("A", "response = " + response);
+                        Log.d("A", "response = " + "make request");
                         // Display the first 500 characters of the response string.
                         arrayRecipes.clear();
                         JSONObject json = null;
