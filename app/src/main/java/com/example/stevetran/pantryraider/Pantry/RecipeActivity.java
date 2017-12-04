@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -167,7 +168,8 @@ public class RecipeActivity extends AppCompatActivity {
     }
     public void saveToDB(View view){
         String key = SharedConstants.FIREBASE_USER_ID;
-
+        Toast.makeText(RecipeActivity.this, "Recipe saved!",
+                Toast.LENGTH_SHORT).show();
         mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).setValue(name);
         //mDatabase.child("/Account/"+key+"/Ingredients/").child(ingredient).setValue(ings.get(ingredient));
 

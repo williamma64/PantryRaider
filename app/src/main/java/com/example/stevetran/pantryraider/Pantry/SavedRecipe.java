@@ -98,8 +98,10 @@ public class SavedRecipe {
                     for (DataSnapshot child : snapshot.getChildren()) {
                         // Parse recipe ID and use it t
                         int recipeId = Integer.parseInt(child.getKey().substring(1));
-                        ridsListStr += recipeId + ",";
-                        System.out.println(ridsListStr);
+                        if(recipeId != -1) {
+                            ridsListStr += recipeId + ",";
+                            System.out.println(ridsListStr);
+                        }
                     }
                     ridsListStr = ridsListStr.substring(0,ridsListStr.length()-1);
 

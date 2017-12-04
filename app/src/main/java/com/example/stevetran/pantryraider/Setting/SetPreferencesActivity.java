@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
-
+import android.widget.Toast;
 
 
 import com.example.stevetran.pantryraider.R;
@@ -117,6 +117,8 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
         childUpdates.put("/Account/" + key + "/Preferences/", postDietValues);
         childUpdates.put("/Account/" + key + "/Allergies/", postAllergyValues);
+        Toast.makeText(SetPreferencesActivity.this, "Preferences successfully updated!",
+                Toast.LENGTH_SHORT).show();
         mDatabase.updateChildren(childUpdates);
     }
 
