@@ -50,17 +50,19 @@ public class ChangePasswordFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if( keyCode == KeyEvent.KEYCODE_BACK) {
+
                     ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
                     viewPager.setCurrentItem(0);
+
                     //set up a new title
                     TextView mTitle = (TextView) getActivity().findViewById(R.id.toolbar_title);
                     mTitle.setText("Setting");
+
                     return true;
                 }
                 return false;
             }
         });
-
         return view;
     }
 

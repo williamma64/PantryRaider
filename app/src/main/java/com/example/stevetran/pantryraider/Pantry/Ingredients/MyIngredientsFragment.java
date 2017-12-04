@@ -38,6 +38,7 @@ public class MyIngredientsFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("A", "oncreateview fragment");
+        //overwrites default backbutton
         mDatabase = FirebaseDatabase.getInstance().getReference();
         view = inflater.inflate(R.layout.fragment_my_ingredients, container, false);
         //set up buttons
@@ -76,6 +77,7 @@ public class MyIngredientsFragment extends Fragment implements View.OnClickListe
                 deleteDialog.show();
             }
         });
+
         return view;
     }
     @Override

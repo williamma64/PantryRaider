@@ -62,7 +62,6 @@ public class SetPreferencesFragment extends Fragment {
                 return false;
             }
         });
-
         dietPref = (GridLayout)view.findViewById(R.id.DietGrid);
         allergyPref = (GridLayout)view.findViewById(R.id.AllergyGrid);
         //Get existing list
