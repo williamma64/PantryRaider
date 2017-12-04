@@ -24,19 +24,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SavedRecipe implements Serializable {
+public class SavedRecipe {
 
     public String title;
     public String description;
     public String imageUrl;
     public String instructionUrl;
     public String label;
-    public int rid;
+    public String rid;
 
     private static DatabaseReference mDatabase;
     private static DatabaseReference relPath;
@@ -59,7 +58,7 @@ public class SavedRecipe implements Serializable {
                 recipe.imageUrl = recipes.getJSONObject(i).getString("image");
                 recipe.instructionUrl = recipes.getJSONObject(i).getString("url");
                 recipe.label = recipes.getJSONObject(i).getString("dietLabel");
-                recipe.rid = recipes.getJSONObject(i).getInt("rid");
+
                 recipeList.add(recipe);
             }
         } catch (JSONException e) {
@@ -70,7 +69,7 @@ public class SavedRecipe implements Serializable {
     }
 
     public static void getRecipesFromFirebase(final Context context,
-                                                                final ArrayList<SavedRecipe> recipeList) {
+                                              final ArrayList<SavedRecipe> recipeList) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         String key = SharedConstants.FIREBASE_USER_ID;
@@ -96,10 +95,8 @@ public class SavedRecipe implements Serializable {
                     for (DataSnapshot child : snapshot.getChildren()) {
                         // Parse recipe ID and use it t
                         int recipeId = Integer.parseInt(child.getKey().substring(1));
-                        if(recipeId != -1) {
-                            ridsListStr += recipeId + ",";
-                            System.out.println(ridsListStr);
-                        }
+                        ridsListStr += recipeId + ",";
+                        System.out.println(ridsListStr);
                     }
                     ridsListStr = ridsListStr.substring(0,ridsListStr.length()-1);
 
@@ -115,8 +112,8 @@ public class SavedRecipe implements Serializable {
     }
 
     private static void getRecipesListInfo(final String ridsListStr,
-                                             final ArrayList<SavedRecipe> recipeList,
-                                             final Context context) {
+                                           final ArrayList<SavedRecipe> recipeList,
+                                           final Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url ="http://54.175.239.59:8080/get_recipes_bulk";
 
@@ -143,7 +140,7 @@ public class SavedRecipe implements Serializable {
                                 recipe.title = recipes.getJSONObject(i).getString("title");
                                 //recipe.description = recipes.getJSONObject(i).getString("description");
                                 recipe.imageUrl = recipes.getJSONObject(i).getString("image_url");
-                                recipe.rid = recipes.getJSONObject(i).getInt("rid");
+                                recipe.rid = recipes.getJSONObject(i).getString("rid");
                                 //recipe.instructionUrl = recipes.getJSONObject(i).getString("url");
                                 //recipe.label = recipes.getJSONObject(i).getString("dietLabel");
 

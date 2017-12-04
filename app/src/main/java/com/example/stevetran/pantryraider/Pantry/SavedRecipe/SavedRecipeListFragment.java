@@ -53,19 +53,21 @@ public class SavedRecipeListFragment extends Fragment {
     }
 
     private void inflateListView(){
-        savedRecipeList = (ListView) view.findViewById(R.id.SavedRecipeList);
-        final ArrayList<SavedRecipe> recipeList = SavedRecipe.getRecipesFromFile("recipes.json", getActivity());
+        savedRecipeList = (ListView) getActivity().findViewById(R.id.SavedRecipeList);
 
-        SavedRecipeAdapter adapter = new SavedRecipeAdapter(getActivity(), recipeList);
-        savedRecipeList.setAdapter(adapter);
+        final ArrayList<SavedRecipe> recipeList = new ArrayList<>();
+        //final ArrayList<SavedRecipe> recipeList = SavedRecipe.getRecipesFromFile("recipes.json", getActivity());
+        SavedRecipe.getRecipesFromFirebase(getActivity(), recipeList);
+        ListView savedRecipeList = (ListView) view.findViewById(R.id.SavedRecipeList);
+
         savedRecipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(getActivity(), RecipeActivity.class);
-                myIntent.putExtra("rid", Integer.toString(recipeList.get((int)id).rid));
+                myIntent.putExtra("rid", recipeList.get((int)id).rid);
                 String key = SharedConstants.FIREBASE_USER_ID;
                 myIntent.putExtra("uid", key);
-                startActivity(myIntent);
+                getActivity().startActivity(myIntent);
             }
         });
     }
