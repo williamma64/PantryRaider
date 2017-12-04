@@ -1,11 +1,16 @@
 package com.example.stevetran.pantryraider.Setting;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,44 +24,71 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class ChangePasswordActivity extends AppCompatActivity {
+public class ChangePasswordFragment extends Fragment {
+    View view;
+    // get current logged in user's info
+    final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    final String email = mAuth.getCurrentUser().getEmail();
+
+    // text initialize
+    TextView oldpassword;
+    TextView newpassword;
+    TextView retypepassword;
+
+    // button initialize
+    Button btnChangePassword;
+    Button btnClear;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_change_password, container, false);
+        //overwrites default backbutton
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if( keyCode == KeyEvent.KEYCODE_BACK) {
+                    ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
+                    viewPager.setCurrentItem(0);
+                    //set up a new title
+                    TextView mTitle = (TextView) getActivity().findViewById(R.id.toolbar_title);
+                    mTitle.setText("Setting");
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        return view;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_password);
-
-        // get current logged in user's info
-        final FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        final String email = mAuth.getCurrentUser().getEmail();
-
-        // text initialize
-        final TextView oldpassword = findViewById(R.id.CPoldpassword);
-        final TextView newpassword = findViewById(R.id.CPnewpassword);
-        final TextView retypepassword = findViewById(R.id.CPretypepassword);
-
-        // button initialize
-        final Button btnChangePassword = (Button) findViewById(R.id.BtnChangePassword);
-        final Button btnClear = (Button) findViewById(R.id.Clear);
-
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        oldpassword = view.findViewById(R.id.CPoldpassword);
+        newpassword = view.findViewById(R.id.CPnewpassword);
+        retypepassword = view.findViewById(R.id.CPretypepassword);
+        btnChangePassword = (Button) view.findViewById(R.id.BtnChangePassword);
+        btnClear = (Button) view.findViewById(R.id.Clear);
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 ///TextView email = (TextView) findViewById(R.id.CPemail);
 
                 if (oldpassword.getText().toString().isEmpty()) {
-                    Toast.makeText(ChangePasswordActivity.this, "Please Enter the Old Password",
+                    Toast.makeText(getContext(), "Please Enter the Old Password",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (newpassword.getText().toString().isEmpty() || retypepassword.getText().toString().isEmpty()) {
-                    Toast.makeText(ChangePasswordActivity.this, "Please Enter and Verify the New Password",
+                    Toast.makeText(getContext(), "Please Enter and Verify the New Password",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!newpassword.getText().toString().equals(retypepassword.getText().toString())) {
-                    Toast.makeText(ChangePasswordActivity.this, "Password Doesn't Match",
+                    Toast.makeText(getContext(), "Password Doesn't Match",
                             Toast.LENGTH_SHORT).show();
                     newpassword.setText("");
                     retypepassword.setText("");
@@ -82,23 +114,23 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Log.d("CP", "Password updated");
-                                                Toast.makeText(ChangePasswordActivity.this, "Password Updated",
+                                                Toast.makeText(getContext(), "Password Updated",
                                                         Toast.LENGTH_SHORT).show();
                                                 // log out current user
                                                 mAuth.signOut();
-                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
                                                 startActivity(intent);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             } else {
                                                 Log.d("CP", "Error password not updated");
-                                                Toast.makeText(ChangePasswordActivity.this, "Error password not updated",
+                                                Toast.makeText(getContext(), "Error password not updated",
                                                         Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
                                 } else {
                                     Log.d("CP", "Error auth failed");
-                                    Toast.makeText(ChangePasswordActivity.this, "Incorrect Old Password",
+                                    Toast.makeText(getContext(), "Incorrect Old Password",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }

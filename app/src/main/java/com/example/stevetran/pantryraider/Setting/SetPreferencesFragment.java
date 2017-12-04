@@ -1,14 +1,18 @@
 package com.example.stevetran.pantryraider.Setting;
 
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
-
-
+import android.widget.TextView;
 
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.SharedConstants;
@@ -21,32 +25,61 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 
-public class SetPreferencesActivity extends AppCompatActivity {
-
+public class SetPreferencesFragment extends Fragment {
+    View view;
     GridLayout dietPref;
     GridLayout allergyPref;
 
     private DatabaseReference mDatabase;
     private DatabaseReference relPath;
+    Button savePrefButton;
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_preferences);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_set_preferences, container, false);
+        //overwrites default backbutton
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if( keyCode == KeyEvent.KEYCODE_BACK) {
 
-        dietPref = (GridLayout)findViewById(R.id.DietGrid);
-        allergyPref = (GridLayout)findViewById(R.id.AllergyGrid);
+                    ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.container);
+                    viewPager.setCurrentItem(0);
+
+                    //set up a new title
+                    TextView mTitle = (TextView) getActivity().findViewById(R.id.toolbar_title);
+                    mTitle.setText("Setting");
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        dietPref = (GridLayout)view.findViewById(R.id.DietGrid);
+        allergyPref = (GridLayout)view.findViewById(R.id.AllergyGrid);
         //Get existing list
         mDatabase = FirebaseDatabase.getInstance().getReference();
         readUserPreferences();
+        return view;
+    }
 
+    @Override
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        savePrefButton = (Button) view.findViewById(R.id.savePrefButton);
+        savePrefButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                updatePreferencesClicked(view);
+            }
+        });
     }
 
     private void readUserPreferences(){
@@ -81,7 +114,6 @@ public class SetPreferencesActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
     }
 
 
@@ -120,7 +152,4 @@ public class SetPreferencesActivity extends AppCompatActivity {
 
         mDatabase.updateChildren(childUpdates);
     }
-
-
-
 }

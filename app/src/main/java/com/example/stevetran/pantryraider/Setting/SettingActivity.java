@@ -22,6 +22,7 @@ public class SettingActivity extends AppCompatActivity {
     private static final int ACTIVITY_NUM = 3;
     private Context mContext = SettingActivity.this;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,9 @@ public class SettingActivity extends AppCompatActivity {
 
     private void setupViewPager(){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SettingFragment());
-//        adapter.addFragment(new SetPreferencesFragment());
+        adapter.addFragment(new SettingFragment()); //0
+        adapter.addFragment(new ChangePasswordFragment()); //1
+        adapter.addFragment(new SetPreferencesFragment()); //2
         ViewPager viewPager = (ViewPager) findViewById(R.id.container); //from layout_center_viewpager
         viewPager.setAdapter(adapter);
     }
