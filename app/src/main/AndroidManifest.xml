@@ -24,15 +24,11 @@
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".Setting.SettingActivity"
             android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".Pantry.Ingredients.MyIngredientsActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".Login.LoginActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".Login.SignUpActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".Search.Recipes.RecipeActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".Pantry.Ingredients.IngredientAddActivity"
             android:windowSoftInputMode="adjustPan"></activity>
     </application>
 

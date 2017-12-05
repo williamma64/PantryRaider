@@ -35,5 +35,8 @@ dependencies {
 
     //external library used to overwrite default bottom nav bar animation
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.1.9'
+
+    //for the search dialog
+    compile 'com.github.mirrajabi:search-dialog:1.1'
 }
 apply plugin: 'com.google.gms.google-services'
