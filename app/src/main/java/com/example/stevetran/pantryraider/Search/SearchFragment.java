@@ -99,6 +99,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.searchButton:
                 makeRequest(query.getText().toString(), filters, cuisineType);
+                setupBackButton(v);
                 break;
             case R.id.filterBtn:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

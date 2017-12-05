@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.stevetran.pantryraider.Pantry.Ingredients.Ingredient;
-import com.example.stevetran.pantryraider.Pantry.Ingredients.MyIngredientsActivity;
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.SharedConstants;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +30,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 /**
  * Created by William Ma on 11/30/2017.
@@ -154,32 +147,32 @@ public class IngredientSearchFragment extends Fragment implements View.OnClickLi
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
-    private void readUserIngredients() {
-        String key = SharedConstants.FIREBASE_USER_ID;
-        mDatabase.child("/Account/").child(key + "/").child("Ingredients/").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("PRINTINGGGGGGGG: " + (snapshot.getValue()));
-                JSONObject addIngredients;
-                try {
-                    // addIngredients is a JSON object storing all ingredients in
-                    // the user's pantry, need to populate ListView in 'My Ingredients'
-                    addIngredients = new JSONObject(snapshot.getValue().toString().replace(" ", "_"));
-                    Log.d("AAAAA", "AAAAA");
-                    Iterator<String> it = addIngredients.keys();
-                    while (it.hasNext()) {
-                        String key = it.next();
-                        ing_add_results.add(key);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
+//    private void readUserIngredients() {
+//        String key = SharedConstants.FIREBASE_USER_ID;
+//        mDatabase.child("/Account/").child(key + "/").child("Ingredients/").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                System.out.println("PRINTINGGGGGGGG: " + (snapshot.getValue()));
+//                JSONObject addIngredients;
+//                try {
+//                    // addIngredients is a JSON object storing all ingredients in
+//                    // the user's pantry, need to populate ListView in 'My Ingredients'
+//                    addIngredients = new JSONObject(snapshot.getValue().toString().replace(" ", "_"));
+//                    Log.d("AAAAA", "AAAAA");
+//                    Iterator<String> it = addIngredients.keys();
+//                    while (it.hasNext()) {
+//                        String key = it.next();
+//                        ing_add_results.add(key);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+//    }
     private void storeUserIngredients() {
         String key = SharedConstants.FIREBASE_USER_ID;//mDatabase.child("Account").push().getKey();
         System.out.println(key);

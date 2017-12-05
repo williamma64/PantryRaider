@@ -73,7 +73,6 @@ public class SavedRecipeAdapter extends BaseAdapter {
         subtitleTextView.setText(recipe.description);
         detailTextView.setText(recipe.label);
 
-
         Picasso.with(mContext).load(recipe.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
         return rowView;
     }
