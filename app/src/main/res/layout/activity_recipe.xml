@@ -19,10 +19,12 @@
                 android:id="@+id/recipename_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="24sp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/image_detail"
@@ -36,34 +38,44 @@
                 android:id="@+id/labelIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
                 android:text="Ingredients"
                 android:textAlignment="textStart"
-                android:layout_marginStart="15dp"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="20dp"/>
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <ListView
+            <TextView
                 android:id="@+id/IngredientList_detail"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/label_instructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="textStart"
-                android:layout_marginStart="15dp"
-                android:textSize="20sp"
-                android:text="Instructions"
                 android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"/>
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:text="Instructions"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
-            <ListView
+            <TextView
                 android:id="@+id/Steps"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@android:color/black" />
 
             <Button
                 android:id="@+id/Save_Button"
