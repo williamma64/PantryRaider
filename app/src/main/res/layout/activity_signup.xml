@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:paddingTop="20dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:weightSum="1">
@@ -25,12 +25,14 @@
             android:textColor="@android:color/black"
             android:textSize="28sp" />
 
-        <ImageView android:src="@drawable/logo"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="185dp"
             android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.09" />
+            android:layout_marginBottom="24dp"
+            android:layout_weight="0.09"
+            android:src="@drawable/logo" />
 
         <!--  Name Label -->
         <android.support.design.widget.TextInputLayout
@@ -64,14 +66,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
+
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="Password"/>
+
         </android.support.design.widget.TextInputLayout>
 
         <!-- Signup Button -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="0.09">
+
+            <EditText
+                android:id="@+id/re_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Password"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signup"
             android:layout_width="fill_parent"
