@@ -73,8 +73,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void forgetPressed(View view) {
-        Intent forgetPassword = new Intent(this, ForgetPasswordActivity.class);
-        startActivity(forgetPassword);
+        Intent intent = new Intent(this, ForgetPasswordActivity.class);
+        startActivity(intent);
+        return;
     }
 
     @Override
