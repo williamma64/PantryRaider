@@ -23,7 +23,7 @@
     <ImageView
         android:id="@+id/Logo"
         android:layout_width="match_parent"
-        android:layout_height="239dp"
+        android:layout_height="214dp"
         app:srcCompat="@drawable/logo" />
 
     <ProgressBar
@@ -99,6 +99,15 @@
                 android:onClick="signUpPressed"
                 android:text="Sign Up"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/forgetpassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:text="Forget Password? Click Here"
+                android:onClick="forgetPressed" />
             />
 
         </LinearLayout>

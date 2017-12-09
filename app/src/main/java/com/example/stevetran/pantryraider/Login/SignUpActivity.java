@@ -91,7 +91,36 @@ public class SignUpActivity extends AppCompatActivity {
         EditText passwordView = (EditText) findViewById(R.id.input_password);
         String password = passwordView.getText().toString();
         EditText usernameView = (EditText) findViewById(R.id.input_name);
-        String useruname = usernameView.getText().toString();
+        String username = usernameView.getText().toString();
+        EditText repasswordView = (EditText) findViewById(R.id.re_password);
+        String repassword = repasswordView.getText().toString();
+        int errorcount = 0;
+
+        //check each blank
+        if (username.length() <= 0) {
+            usernameView.setError("Please Enter Your Name");
+            errorcount++;
+        }
+        if (email.length() <= 0) {
+            emailView.setError("Please Enter Your Email");
+            errorcount++;
+        }
+        if (password.length() <= 0) {
+            passwordView.setError("Please Enter Your Name");
+            errorcount++;
+        }
+        if (repassword.length() <= 0) {
+            repasswordView.setError("Please Confirm Your Password");
+            errorcount++;
+        }
+        if (!repassword.equals(password)) {
+            repasswordView.setText("");
+            repasswordView.setError("Password Doesn't Match");
+            errorcount++;
+        }
+        if (errorcount > 0) {
+            return;
+        }
 
 
         mAuth.createUserWithEmailAndPassword(email, password)
