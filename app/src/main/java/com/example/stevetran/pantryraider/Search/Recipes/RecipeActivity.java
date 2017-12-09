@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,8 +23,11 @@ import com.android.volley.toolbox.Volley;
 import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Util.BottomNavigationHelper;
 import com.example.stevetran.pantryraider.Util.SharedConstants;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Picasso;
 
@@ -49,6 +53,7 @@ public class RecipeActivity extends AppCompatActivity {
     private TextView mName;
     private ListView mListIngredients;
     private ListView mSteps;
+    private Button saveButton;
 
     private String image_url = "https://spoonacular.com/recipeImages/615348-556x370.jpg";
     private String name = "What";
@@ -61,7 +66,9 @@ public class RecipeActivity extends AppCompatActivity {
     ArrayList<String> Steps = new ArrayList<>();
 
     private DatabaseReference mDatabase;
-    private DatabaseReference relPath;
+    private String key = SharedConstants.FIREBASE_USER_ID;
+
+    private boolean isCurrentlySaved;
 
 
     @Override
@@ -76,12 +83,37 @@ public class RecipeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_recipe);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        key = SharedConstants.FIREBASE_USER_ID;
+
+        saveButton = findViewById(R.id.Save_Button);
+        mDatabase.child("/Saved_Recipes/" + key + "/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("r"+rid).exists()){
+                    // change button to unsave
+                    saveButton.setText("Unsave Recipe");
+                    isCurrentlySaved = true;
+                } else {
+                    // change button to save
+                    saveButton.setText("Save Recipe");
+                    isCurrentlySaved = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
 
 
         mImage = findViewById(R.id.image_detail);
         mName = findViewById(R.id.recipename_detail);
         mListIngredients = findViewById(R.id.IngredientList_detail);
         mSteps = findViewById(R.id.Steps);
+
+
 
         adapter_ingredinets = new ArrayAdapter<String>(
                 this,
@@ -158,13 +190,27 @@ public class RecipeActivity extends AppCompatActivity {
         queue.add(stringRequest);
 
     }
-    public void saveToDB(View view){
-        String key = SharedConstants.FIREBASE_USER_ID;
-        Toast.makeText(RecipeActivity.this, "Recipe saved!",
+    public void savePressed(View view){
+        if(isCurrentlySaved) deleteFromSavedDB();
+        else saveToDB();
+
+    }
+    public void saveToDB(){
+        Toast.makeText(RecipeActivity.this, "Recipe Saved!",
                 Toast.LENGTH_SHORT).show();
         mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).setValue(name);
-        //mDatabase.child("/Account/"+key+"/Ingredients/").child(ingredient).setValue(ings.get(ingredient));
+        saveButton.setText("Unsave Recipe");
+        isCurrentlySaved = true;
 
+
+    }
+
+    public  void deleteFromSavedDB() {
+        Toast.makeText(RecipeActivity.this, "Recipe Unsaved!",
+                Toast.LENGTH_SHORT).show();
+        mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).removeValue();
+        saveButton.setText("Save Recipe");
+        isCurrentlySaved = false;
 
     }
 

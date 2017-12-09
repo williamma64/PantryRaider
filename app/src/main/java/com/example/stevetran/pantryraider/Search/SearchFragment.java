@@ -1,6 +1,7 @@
 package com.example.stevetran.pantryraider.Search;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,8 +30,14 @@ import com.example.stevetran.pantryraider.R;
 import com.example.stevetran.pantryraider.Search.Recipes.Recipe;
 import com.example.stevetran.pantryraider.Search.Recipes.RecipeActivity;
 import com.example.stevetran.pantryraider.Search.Recipes.RecipeAdapter;
+import com.example.stevetran.pantryraider.Util.SharedConstants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +60,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
     Button searchButton;
     Button filterBtn;
 
+    ProgressBar spinner;
+
     // display results
     RecipeAdapter adapter;
     ArrayList<Recipe> arrayRecipes = new ArrayList<>();
@@ -65,6 +76,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
     int cuisineType = -1;
     int calories = 0;
 
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private boolean hasIngredients = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,6 +89,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         //set up buttons
         searchButton = (Button) view.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(this);
+
+        spinner = view.findViewById(R.id.loading);
+        spinner.setVisibility(View.GONE);
 
         filterBtn = (Button) view.findViewById(R.id.filterBtn);
         filterBtn.setOnClickListener(this);
@@ -91,6 +109,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        readUserIngredients();
         return view;
     }
     @Override
@@ -98,8 +119,20 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         EditText query = (EditText) view.findViewById(R.id.editText2);
         switch (v.getId()) {
             case R.id.searchButton:
-                makeRequest(query.getText().toString(), filters, cuisineType);
-                setupBackButton(v);
+                spinner.setVisibility(View.VISIBLE);
+                String q = query.getText().toString();
+                if(q.equals("") && !filters[0]) {
+                    Toast.makeText(getContext(), "Enter a keyword or choose search by pantry.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if (!hasIngredients && filters[0]) {
+                    Toast.makeText(getContext(), "Add ingredients to your pantry to search by pantry.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    makeRequest(query.getText().toString(), filters, cuisineType);
+                    setupBackButton(v);
+                }
                 break;
             case R.id.filterBtn:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -137,6 +170,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                                                     mainFilterStatus[1] = false;
                                                     ((AlertDialog) mainDialog).getListView().setItemChecked(1, false);
                                                     filters[1] = false;
+                                                    cuisineType = -1;
                                                 }
                                             });
                                     AlertDialog cuisineDialog = cuisineBuilder.create();
@@ -192,10 +226,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                                 // User clicked Done
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Clear Filters", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
+                                for(int i = 0; i < filters.length; i++) {
+                                    filters[i] = false;
+                                    mainFilterStatus[i] = false;
+                                }
                             }
                         });
                 filterDialog = builder.create();
@@ -235,6 +272,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                         }
 
                         adapter.notifyDataSetChanged();
+                        spinner.setVisibility(View.GONE);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -298,5 +336,29 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
             }
         });
     }
-}
 
+    private void readUserIngredients() {
+        String key = SharedConstants.FIREBASE_USER_ID;
+        mDatabase.child("/Account/").child(key + "/").child("Ingredients/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // addIngredients is a JSON object storing all ingredients in
+                // the user's pantry, need to populate ListView in 'My Ingredients'
+                if(snapshot.getValue() == null) {
+                    Log.e("Server Error", "onDataChange: snapshot.getValue() is null");
+                    return;
+                }
+                String ingList = snapshot.getValue().toString();
+                ArrayList<String> ingArray = new ArrayList<>();
+                ingList = ingList.substring(1, ingList.length());
+                String[] tmp = ingList.split(", ");
+                if (tmp.length > 1) {
+                    hasIngredients = true;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+}

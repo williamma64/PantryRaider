@@ -8,36 +8,49 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <EditText
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
+        android:layout_above="@+id/searchButton"
+        android:layout_alignStart="@+id/searchButton"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="136dp" />
+
+    <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:ems="10"
         android:hint="Search Recipe..."
-        android:layout_alignParentEnd="true" />
+        android:inputType="textPersonName" />
 
     <Button
-        android:text="Add Filter"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
         android:id="@+id/filterBtn"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/editText2"
-        android:layout_alignParentStart="true" />
+        android:background="@android:color/holo_orange_dark"
+        android:text="Add Filter" />
 
     <Button
-        android:text="Search"
-        android:layout_height="wrap_content"
         android:id="@+id/searchButton"
-        android:layout_width="170dp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/editText2"
-        android:layout_alignParentEnd="true" />
+        android:background="@android:color/holo_orange_dark"
+        android:text="Search" />
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/filterBtn" />
+        android:layout_below="@+id/filterBtn"
+        android:layout_marginTop="13dp" />
 
 </RelativeLayout>
