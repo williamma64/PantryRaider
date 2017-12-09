@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bamboobackground"
     tools:context="com.example.stevetran.pantryraider.Search.Recipes.RecipeActivity"
     >
 
@@ -70,7 +71,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@android:color/holo_orange_dark"
-                android:onClick="saveToDB"
+                android:onClick="savePressed"
                 android:text="Save Recipe" />
 
         </LinearLayout>
