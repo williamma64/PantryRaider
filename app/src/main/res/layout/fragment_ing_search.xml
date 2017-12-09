@@ -24,6 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/ing_query"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@color/white"
         android:text="Search" />
 
     <ListView
@@ -48,6 +50,8 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/myCart"
         android:layout_marginTop="8dp"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@color/white"
         android:text="Done!" />
 
 </RelativeLayout>

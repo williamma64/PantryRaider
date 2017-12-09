@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,7 +30,7 @@
             android:text="Lacto vegetarian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/lactovegetarian"
             android:tag="lactovegeratian"/>
         <CheckBox
@@ -37,13 +38,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/vegetarian"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:tag="vegetarian"/>
         <CheckBox
             android:text="Ovo vegetarian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/ovovegetarian"
             android:tag="ovovegetarian"/>
 
@@ -51,7 +52,7 @@
             android:text="Pescetarian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/pesc"
             android:tag="pescetarian"/>
 
@@ -59,7 +60,7 @@
             android:text="Vegan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/vegan"
             android:tag="vegan"/>
 
@@ -88,7 +89,7 @@
             android:text="Dairy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/dairy"
             android:tag="dairy"/>
 
@@ -96,7 +97,7 @@
             android:text="Egg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/egg"
             android:tag="egg"/>
 
@@ -104,23 +105,24 @@
             android:text="Gluten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/gluten"
             android:tag="gluten"/>
 
         <CheckBox
-            android:text="Peanut"
+            android:id="@+id/peanut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
-            android:id="@+id/peanut"
-            android:tag="peanut"/>
+            android:buttonTint="@android:color/holo_blue_dark"
+            android:tag="peanut"
+            android:text="Peanut"
+            app:buttonTint="@android:color/holo_blue_dark" />
 
         <CheckBox
             android:text="Seafood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/seafood"
             android:tag="seafood"/>
 
@@ -128,7 +130,7 @@
             android:text="Sesame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/sesame"
             android:tag="sesame"/>
 
@@ -136,7 +138,7 @@
             android:text="Soy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/soy"
             android:tag="soy"/>
 
@@ -144,7 +146,7 @@
             android:text="Wheat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/wheat"
             android:tag="wheat"/>
 
@@ -152,7 +154,7 @@
             android:text="Tree Nut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_orange_dark"
+            android:buttonTint="@android:color/holo_blue_dark"
             android:id="@+id/treeNut"
             android:tag="treenut"/>
 
@@ -164,14 +166,15 @@
         android:layout_height="match_parent">
 
         <Button
-            android:text="Save Preferences"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/savePrefButton"
-            android:backgroundTint="@android:color/holo_orange_dark"
-            android:layout_marginTop="39dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="@color/white"
+            android:text="Save Preferences"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 

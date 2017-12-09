@@ -6,6 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="@drawable/bamboobackground"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <EditText
@@ -18,26 +19,31 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Add Filter"
+        android:id="@+id/filterBtn"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:id="@+id/filterBtn"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/editText2"
-        android:layout_alignParentStart="true" />
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@color/white"
+        android:text="Add Filter" />
 
     <Button
-        android:text="Search"
-        android:layout_height="wrap_content"
         android:id="@+id/searchButton"
         android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/editText2"
-        android:layout_alignParentEnd="true" />
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@color/white"
+        android:text="Search" />
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/filterBtn" />
+        android:layout_below="@+id/filterBtn"
+        android:layout_marginBottom="50dp" />
 
 </RelativeLayout>
