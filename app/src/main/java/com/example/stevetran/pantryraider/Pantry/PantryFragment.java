@@ -18,9 +18,9 @@ import com.example.stevetran.pantryraider.R;
  */
 
 public class PantryFragment extends Fragment implements View.OnClickListener{
-    Button savedRecipeButton;
-    Button myIngredientsButton;
-    View view;
+    private Button savedRecipeButton;
+    private Button myIngredientsButton;
+    private View view;
     final String TITLE = "Pantry";
     @Nullable
     @Override
