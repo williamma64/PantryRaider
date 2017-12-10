@@ -23,12 +23,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingFragment extends Fragment implements View.OnClickListener{
     //this view
-    View view;
+    private View view;
 
     //buttons
-    Button changePasswordButton;
-    Button setPreferencesButton;
-    Button signOutButton;
+    private Button changePasswordButton;
+    private Button setPreferencesButton;
+    private Button signOutButton;
 
     @Nullable
     @Override
