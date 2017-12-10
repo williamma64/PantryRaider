@@ -89,6 +89,7 @@ public class SavedRecipeListFragment extends Fragment {
     private void refresh(){
         if(SharedConstants.deletedRecipes == null) return;
         int position = SharedConstants.rids.indexOf(SharedConstants.deletedRecipes);
+        if(position == -1) return;
         recipeList.remove(recipeList.get(position));
         SharedConstants.rids.remove(SharedConstants.deletedRecipes);
         adapter.notifyDataSetChanged();

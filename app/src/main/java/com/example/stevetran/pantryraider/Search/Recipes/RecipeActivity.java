@@ -166,6 +166,7 @@ public class RecipeActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
         mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).setValue(name);
         saveButton.setText(getResources().getString(R.string.unsave_btn));
+        SharedConstants.deletedRecipes = null;
         isCurrentlySaved = true;
     }
 
