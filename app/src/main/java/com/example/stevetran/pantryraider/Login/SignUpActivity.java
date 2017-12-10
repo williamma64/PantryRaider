@@ -35,24 +35,15 @@ import java.util.HashMap;
 
 class User {
     public String uid;
-    //public int preference;
-    //public int allergy;
     public HashMap<String, Object> Preferences;
     public HashMap<String, Object> Allergies;
     public HashMap<String, Object> Ingredients;
     public HashMap<String, Object> Saved_Recipes;
-
-
+    
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    /*
-    public User(String uid, int preference, int allergy) {
-        this.uid = uid;
-        this.preference = preference;
-        this.allergy = allergy;
-    } */
     public User(String uid, HashMap preference, HashMap allergy, HashMap ingredients){
         this.uid = uid;
         this.Preferences = preference;
@@ -63,7 +54,6 @@ class User {
     public User(String uid, HashMap saved_recipes) {
         this.Saved_Recipes = saved_recipes;
     }
-
 }
 
 
@@ -80,8 +70,6 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
     }
-
-
 
     public void createPressed(View view) {
         final Intent goToHome = new Intent(this, HomeActivity.class);
@@ -209,6 +197,5 @@ public class SignUpActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
     }
 }
