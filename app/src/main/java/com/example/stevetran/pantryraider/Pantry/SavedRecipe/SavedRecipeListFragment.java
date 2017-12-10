@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 public class SavedRecipeListFragment extends Fragment {
     View view;
     private ListView savedRecipeList;
+    ArrayList<SavedRecipe> recipeList;
+    SavedRecipeAdapter adapter;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_saved_recipe, container, false);
@@ -54,11 +58,15 @@ public class SavedRecipeListFragment extends Fragment {
 
     private void inflateListView(){
         savedRecipeList = (ListView) getActivity().findViewById(R.id.SavedRecipeList);
-
-        final ArrayList<SavedRecipe> recipeList = new ArrayList<>();
+        SharedConstants.rids.clear();
+        recipeList = new ArrayList<>();
         //final ArrayList<SavedRecipe> recipeList = SavedRecipe.getRecipesFromFile("recipes.json", getActivity());
-        SavedRecipe.getRecipesFromFirebase(getActivity(), recipeList);
         ListView savedRecipeList = (ListView) view.findViewById(R.id.SavedRecipeList);
+        adapter = new SavedRecipeAdapter(getActivity(), recipeList);
+
+        SavedRecipe.getRecipesFromFirebase(getActivity(), recipeList, adapter);
+        savedRecipeList = (ListView) view.findViewById(R.id.SavedRecipeList);
+        savedRecipeList.setAdapter(adapter);
 
         savedRecipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,4 +79,20 @@ public class SavedRecipeListFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+        Log.e("tag", "HEY WE ARE HERE IN ON RESUME");
+    }
+    private void refresh(){
+        if(SharedConstants.deletedRecipes == null) return;
+        int position = SharedConstants.rids.indexOf(SharedConstants.deletedRecipes);
+        recipeList.remove(recipeList.get(position));
+        SharedConstants.rids.remove(SharedConstants.deletedRecipes);
+        adapter.notifyDataSetChanged();
+        SharedConstants.deletedRecipes = null;
+    }
+
 }

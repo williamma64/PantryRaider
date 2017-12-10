@@ -2,6 +2,7 @@ package com.example.stevetran.pantryraider.Search.Recipes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -47,8 +48,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     private ImageView mImage;
     private TextView mName;
-    private ListView mListIngredients;
-    private ListView mSteps;
+    private TextView mListIngredients;
+    private TextView mSteps;
     private Button saveButton;
 
     private String image_url = "";
@@ -58,8 +59,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter_ingredinets;
     ArrayAdapter<String> adapter_steps;
-    ArrayList<String> listIngredients = new ArrayList<>();
-    ArrayList<String> steps = new ArrayList<>();
+    private String ListIngredients = "";
+    private String Steps = "";
 
     private DatabaseReference mDatabase;
     private String key = SharedConstants.FIREBASE_USER_ID;
@@ -106,19 +107,6 @@ public class RecipeActivity extends AppCompatActivity {
         mListIngredients = findViewById(R.id.IngredientList_detail);
         mSteps = findViewById(R.id.Steps);
 
-        adapter_ingredinets = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                listIngredients
-        );
-        mListIngredients.setAdapter(adapter_ingredinets);
-
-        adapter_steps = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                steps
-        );
-        mSteps.setAdapter(adapter_steps);
     }
 
     private void makeRequest(final String rid) {
@@ -139,19 +127,25 @@ public class RecipeActivity extends AppCompatActivity {
                             name = json.getString("title");
                             JSONArray ing = json.getJSONArray("ingredients");
                             for(int i = 0; i < ing.length(); i++) {
-                                listIngredients.add(ing.getJSONObject(i).getString("string"));
+
+                                ListIngredients += (ing.getJSONObject(i).getString("string"))+"\n";
+
                             }
                             JSONArray instructions = json.getJSONArray("instructions");
                             for(int i = 0; i < instructions.length(); i++) {
-                                steps.add(instructions.getString(i));
+                                Steps += (i+1) + ". " + (instructions.getString(i))+"\n\n";
                             }
                             mName.setText(name);
                             Picasso.with(mContext)
                                     .load(image_url)
                                     .into(mImage);
+                            mListIngredients.setText(ListIngredients);
+                            mListIngredients.setTextSize(18);
+                            mListIngredients.setTypeface(null, Typeface.BOLD);
+                            mSteps.setText(Steps);
+                            mSteps.setTextSize(18);
+                            mSteps.setTypeface(null, Typeface.BOLD);
 
-                            adapter_ingredinets.notifyDataSetChanged();
-                            adapter_steps.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -188,6 +182,7 @@ public class RecipeActivity extends AppCompatActivity {
     public  void deleteFromSavedDB() {
         Toast.makeText(RecipeActivity.this, "Recipe Unsaved!",
                 Toast.LENGTH_SHORT).show();
+        SharedConstants.deletedRecipes = rid;
         mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).removeValue();
         saveButton.setText("Save Recipe");
         isCurrentlySaved = false;

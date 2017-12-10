@@ -28,6 +28,10 @@ public class SavedRecipeAdapter extends BaseAdapter {
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void setmDataSource(ArrayList<SavedRecipe> items) {
+        mDataSource = items;
+    }
+
     //1
     @Override
     public int getCount() {
