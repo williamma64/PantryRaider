@@ -37,5 +37,6 @@
         <item>Thai</item>
         <item>Indian</item>
         <item>British</item>
+        <item>American</item>
     </string-array>
 </resources>

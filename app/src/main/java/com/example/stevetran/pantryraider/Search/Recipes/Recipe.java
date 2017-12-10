@@ -6,10 +6,7 @@ package com.example.stevetran.pantryraider.Search.Recipes;
 
 public class Recipe {
     public String title;
-    public String description;
     public String imageUrl;
-    public String instructionUrl;
-    public String label;
     public String rid;
 
     public Recipe(){}
@@ -18,7 +15,7 @@ public class Recipe {
         return this.title;
     }
 
-    public String getImage_url() {
+    String getImage_url() {
         return this.imageUrl;
     }
 

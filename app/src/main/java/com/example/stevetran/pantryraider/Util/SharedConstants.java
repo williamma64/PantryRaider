@@ -6,4 +6,5 @@ package com.example.stevetran.pantryraider.Util;
 
 public class SharedConstants {
     public static String FIREBASE_USER_ID;
+    public static String BASE_URL = "http://54.175.239.59:8080/";
 }

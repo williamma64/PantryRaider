@@ -7,8 +7,7 @@ package com.example.stevetran.pantryraider.Search.Recipes;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
-import android.util.Log;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,25 +16,24 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.stevetran.pantryraider.Pantry.SavedRecipe.SavedRecipe;
 import com.example.stevetran.pantryraider.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class RecipeAdapter extends ArrayAdapter{
-    ArrayList<Recipe> modelItems = null;
-    Context context;
+    private ArrayList<Recipe> modelItems = null;
+    private Context context;
 
     public RecipeAdapter(Context context, ArrayList<Recipe> resource) {
-        super(context, R.layout.view_row,resource);
-        // TODO Auto-generated constructor stub
+        super(context, R.layout.view_row, resource);
         this.context = context;
         this.modelItems = resource;
     }
+
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         convertView = inflater.inflate(R.layout.view_row, parent, false);
         TextView name = (TextView) convertView.findViewById(R.id.textView1);
@@ -52,7 +50,6 @@ public class RecipeAdapter extends ArrayAdapter{
         if(name.length() > 25) {
             name = name.substring(0, 25) + "...";
         }
-        Log.d("A", "name = " + name);
         return name;
     }
 }
