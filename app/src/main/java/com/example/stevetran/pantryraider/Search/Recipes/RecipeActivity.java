@@ -2,6 +2,7 @@ package com.example.stevetran.pantryraider.Search.Recipes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -51,8 +52,8 @@ public class RecipeActivity extends AppCompatActivity {
     //private View = R.layout.activity_recipe;
     private ImageView mImage;
     private TextView mName;
-    private ListView mListIngredients;
-    private ListView mSteps;
+    private TextView mListIngredients;
+    private TextView mSteps;
     private Button saveButton;
 
     private String image_url = "https://spoonacular.com/recipeImages/615348-556x370.jpg";
@@ -62,8 +63,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter_ingredinets;
     ArrayAdapter<String> adapter_steps;
-    ArrayList<String> ListIngredients = new ArrayList<>();
-    ArrayList<String> Steps = new ArrayList<>();
+    private String ListIngredients = "";
+    private String Steps = "";
 
     private DatabaseReference mDatabase;
     private String key = SharedConstants.FIREBASE_USER_ID;
@@ -115,7 +116,7 @@ public class RecipeActivity extends AppCompatActivity {
 
 
 
-        adapter_ingredinets = new ArrayAdapter<String>(
+       /* adapter_ingredinets = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
                 ListIngredients
@@ -128,7 +129,7 @@ public class RecipeActivity extends AppCompatActivity {
                 Steps
         );
         mSteps.setAdapter(adapter_steps);
-
+       */
     }
 
     private void makeRequest(final String rid) {
@@ -150,19 +151,26 @@ public class RecipeActivity extends AppCompatActivity {
                             name = json.getString("title");
                             JSONArray ing = json.getJSONArray("ingredients");
                             for(int i = 0; i < ing.length(); i++) {
-                                ListIngredients.add(ing.getJSONObject(i).getString("string"));
+                                ListIngredients += (ing.getJSONObject(i).getString("string"))+"\n";
+
                             }
                             JSONArray instructions = json.getJSONArray("instructions");
                             for(int i = 0; i < instructions.length(); i++) {
-                                Steps.add(instructions.getString(i));
+                                Steps += (i+1) + ". " + (instructions.getString(i))+"\n\n";
                             }
                             mName.setText(name);
                             Picasso.with(mContext)
                                     .load(image_url)
                                     .into(mImage);
+                            mListIngredients.setText(ListIngredients);
+                            mListIngredients.setTextSize(18);
+                            mListIngredients.setTypeface(null, Typeface.BOLD);
+                            mSteps.setText(Steps);
+                            mSteps.setTextSize(18);
+                            mSteps.setTypeface(null, Typeface.BOLD);
 
-                            adapter_ingredinets.notifyDataSetChanged();
-                            adapter_steps.notifyDataSetChanged();
+                            //adapter_ingredinets.notifyDataSetChanged();
+                            //adapter_steps.notifyDataSetChanged();
                         } catch (JSONException e) {
 
                             e.printStackTrace();
