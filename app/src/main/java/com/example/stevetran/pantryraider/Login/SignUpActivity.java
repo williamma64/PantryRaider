@@ -39,7 +39,7 @@ class User {
     public HashMap<String, Object> Allergies;
     public HashMap<String, Object> Ingredients;
     public HashMap<String, Object> Saved_Recipes;
-    
+
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }

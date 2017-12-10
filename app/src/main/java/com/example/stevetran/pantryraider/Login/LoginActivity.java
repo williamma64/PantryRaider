@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static String TAG = "LoginActivity";
-    String email, password;
 
     public void signUpPressed(View view) {
         Intent goToSignUp = new Intent(this, SignUpActivity.class);
@@ -52,8 +51,11 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            if(!user.isEmailVerified()) {
+                                Toast.makeText(LoginActivity.this, "E-mail Not Verified", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             SharedConstants.FIREBASE_USER_ID = user.getUid();
-                            //System.out.println("$$$$$$$$$$$$$$$$$$$: " + user.getUid());
                             startActivity(goToHome);
                             finish();
                         } else {
@@ -93,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Logged In As: " + mAuth.getCurrentUser().getEmail(),
                     Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override

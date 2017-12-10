@@ -11,6 +11,8 @@
     <string name="action_sign_up_short">action_sign_up_short</string>
     <string name="action_sign_in">action_sign_in</string>
     <string name="action_sign_up">action_sign_up</string>
+    <string name="unsave_btn">Unsave Recipe</string>
+    <string name="save_btn">Save Recipe</string>
     <string-array name="arrayRecipes">
         <item></item>
     </string-array>

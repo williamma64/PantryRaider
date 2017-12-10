@@ -26,9 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        //set up the bottom navigation view
         setupBottomNavigationView();
-        //set up view pager for the fragments
         setupToolBar();
         setupViewPager();
     }
@@ -42,15 +40,14 @@ public class HomeActivity extends AppCompatActivity {
     private void setupViewPager(){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new HomeFragment());
-//        adapter.addFragment(new SetPreferencesFragment());
-        ViewPager viewPager = (ViewPager) findViewById(R.id.container); //from layout_center_viewpager
+        ViewPager viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(adapter);
     }
 
     /**
      * BottomNavigationView setup
      */
-    private void setupBottomNavigationView(){
+    private void setupBottomNavigationView() {
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
         BottomNavigationHelper.setupBottomNavigationView(bottomNavigationViewEx);
         BottomNavigationHelper.enableNavigation(mContext, bottomNavigationViewEx, this);
@@ -59,6 +56,5 @@ public class HomeActivity extends AppCompatActivity {
         menuItem.setChecked(true);
     }
     @Override
-    public void onBackPressed(){
-    }
+    public void onBackPressed() {}
 }

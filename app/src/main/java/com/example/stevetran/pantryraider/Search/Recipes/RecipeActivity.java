@@ -6,10 +6,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +30,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,10 +54,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     private String rid;
 
-    ArrayAdapter<String> adapter_ingredinets;
-    ArrayAdapter<String> adapter_steps;
-    private String ListIngredients = "";
-    private String Steps = "";
+    private String listIngredients = "";
+    private String steps = "";
 
     private DatabaseReference mDatabase;
     private String key = SharedConstants.FIREBASE_USER_ID;
@@ -71,7 +66,6 @@ public class RecipeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set up the bottom navigation view
 
         Intent myIntent = getIntent();
         rid = myIntent.getStringExtra("rid");
@@ -97,8 +91,7 @@ public class RecipeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
         // set up view elements
@@ -118,8 +111,7 @@ public class RecipeActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        JSONObject json = null;
+                        JSONObject json;
                         try {
                             json = new JSONObject(response);
 
@@ -127,22 +119,20 @@ public class RecipeActivity extends AppCompatActivity {
                             name = json.getString("title");
                             JSONArray ing = json.getJSONArray("ingredients");
                             for(int i = 0; i < ing.length(); i++) {
-
-                                ListIngredients += (ing.getJSONObject(i).getString("string"))+"\n";
-
+                                listIngredients += (ing.getJSONObject(i).getString("string"))+"\n";
                             }
                             JSONArray instructions = json.getJSONArray("instructions");
                             for(int i = 0; i < instructions.length(); i++) {
-                                Steps += (i+1) + ". " + (instructions.getString(i))+"\n\n";
+                                steps += (i+1) + ". " + (instructions.getString(i))+"\n\n";
                             }
                             mName.setText(name);
                             Picasso.with(mContext)
                                     .load(image_url)
                                     .into(mImage);
-                            mListIngredients.setText(ListIngredients);
+                            mListIngredients.setText(listIngredients);
                             mListIngredients.setTextSize(18);
                             mListIngredients.setTypeface(null, Typeface.BOLD);
-                            mSteps.setText(Steps);
+                            mSteps.setText(steps);
                             mSteps.setTextSize(18);
                             mSteps.setTypeface(null, Typeface.BOLD);
 
@@ -175,7 +165,7 @@ public class RecipeActivity extends AppCompatActivity {
         Toast.makeText(RecipeActivity.this, "Recipe Saved!",
                 Toast.LENGTH_SHORT).show();
         mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).setValue(name);
-        saveButton.setText("Unsave Recipe");
+        saveButton.setText(getResources().getString(R.string.unsave_btn));
         isCurrentlySaved = true;
     }
 
@@ -184,8 +174,7 @@ public class RecipeActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
         SharedConstants.deletedRecipes = rid;
         mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).removeValue();
-        saveButton.setText("Save Recipe");
+        saveButton.setText(getResources().getString(R.string.save_btn));
         isCurrentlySaved = false;
-
     }
 }
