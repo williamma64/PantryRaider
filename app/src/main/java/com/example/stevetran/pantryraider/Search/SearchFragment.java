@@ -1,7 +1,7 @@
 package com.example.stevetran.pantryraider.Search;
 
 import android.app.AlertDialog;
-import android.app.Application;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,35 +72,34 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
 
     // filters
     AlertDialog filterDialog;
-    boolean[] mainFilterStatus = {false, false, false};
-    boolean[] filters = {false, false, false};
     int cuisineType = -1;
     int calories = 0;
+    int recipeType = -1;
 
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
     private boolean hasIngredients = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
-        //overwrite back button behaivor
+
+        //overwrite back button behavior
         setupBackButton(view);
+
         //set up buttons
         searchButton = (Button) view.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(this);
+        filterBtn = (Button) view.findViewById(R.id.filterBtn);
+        filterBtn.setOnClickListener(this);
 
         spinner = view.findViewById(R.id.loading);
         spinner.setVisibility(View.GONE);
 
-        filterBtn = (Button) view.findViewById(R.id.filterBtn);
-        filterBtn.setOnClickListener(this);
-
+        // set up listview
         ListView lv = (ListView) view.findViewById(R.id.listview);
         adapter = new RecipeAdapter(this.getContext(), arrayRecipes);
         lv.setAdapter(adapter);
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,8 +109,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        // set up database
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
         readUserIngredients();
         return view;
     }
@@ -119,35 +119,36 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         EditText query = (EditText) view.findViewById(R.id.editText2);
         switch (v.getId()) {
             case R.id.searchButton:
+                InputMethodManager imm = (InputMethodManager) this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 spinner.setVisibility(View.VISIBLE);
                 String q = query.getText().toString();
-                if(q.equals("") && !filters[0]) {
+                if((q.equals("") && recipeType != 0)) {
                     Toast.makeText(getContext(), "Enter a keyword or choose search by pantry.",
                             Toast.LENGTH_SHORT).show();
                     spinner.setVisibility(View.GONE);
                 }
-                else if (!hasIngredients && filters[0]) {
+                else if (!hasIngredients && recipeType == 0) {
                     Toast.makeText(getContext(), "Add ingredients to your pantry to search by pantry.",
                             Toast.LENGTH_SHORT).show();
                     spinner.setVisibility(View.GONE);
                 }
                 else {
-                    makeRequest(query.getText().toString(), filters, cuisineType);
+                    makeRequest(query.getText().toString(), cuisineType);
                     setupBackButton(v);
-                    spinner.setVisibility(View.GONE);
                 }
                 break;
             case R.id.filterBtn:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Filters")
-                        .setMultiChoiceItems(R.array.filters, mainFilterStatus, new DialogInterface.OnMultiChoiceClickListener() {
+                        .setSingleChoiceItems(R.array.filters, recipeType, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(final DialogInterface mainDialog, int which,
-                                                boolean isChecked) {
+                            public void onClick(final DialogInterface mainDialog, int which) {
                                 if(which == 0) {
-                                    filters[which] = isChecked;
+                                    recipeType = which;
                                 }
                                 else if(which == 1) {
+                                    recipeType = which;
                                     AlertDialog.Builder cuisineBuilder = new AlertDialog.Builder(getActivity());
                                     cuisineBuilder.setTitle("Pick cuisine")
                                             .setSingleChoiceItems(R.array.cuisine, cuisineType, new DialogInterface.OnClickListener() {
@@ -161,18 +162,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     // User clicked Done
-                                                    mainFilterStatus[1] = true;
                                                     ((AlertDialog) mainDialog).getListView().setItemChecked(1, true);
-                                                    filters[1] = true;
                                                 }
                                             })
                                             .setNegativeButton("Clear", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     // User cancelled the dialog
-                                                    mainFilterStatus[1] = false;
                                                     ((AlertDialog) mainDialog).getListView().setItemChecked(1, false);
-                                                    filters[1] = false;
                                                     cuisineType = -1;
                                                 }
                                             });
@@ -180,6 +177,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                                     cuisineDialog.show();
                                 }
                                 else if(which == 2) {
+                                    recipeType = which;
                                     AlertDialog.Builder caloriesBuilder = new AlertDialog.Builder(getActivity());
                                     final EditText input = new EditText(getContext());
                                     caloriesBuilder.setTitle("Enter max calories")
@@ -192,14 +190,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                                                         calories = Integer.parseInt(str);
                                                     }
                                                     if(calories > 0) {
-                                                        mainFilterStatus[2] = true;
                                                         ((AlertDialog) mainDialog).getListView().setItemChecked(2, true);
-                                                        filters[2] = true;
                                                     }
                                                     else {
-                                                        mainFilterStatus[2] = false;
                                                         ((AlertDialog) mainDialog).getListView().setItemChecked(2, false);
-                                                        filters[2] = false;
                                                     }
                                                 }
                                             })
@@ -208,9 +202,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     // User cancelled the dialog
                                                     calories = 0;
-                                                    mainFilterStatus[2] = false;
                                                     ((AlertDialog) mainDialog).getListView().setItemChecked(2, false);
-                                                    filters[2] = false;
                                                 }
                                             });
                                     input.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -232,10 +224,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                         .setNegativeButton("Clear Filters", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                for(int i = 0; i < filters.length; i++) {
-                                    filters[i] = false;
-                                    mainFilterStatus[i] = false;
-                                }
+                                recipeType = -1;
                             }
                         });
                 filterDialog = builder.create();
@@ -244,7 +233,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void makeRequest(final String query, final boolean[] filters, final int cuisineType) {
+    private void makeRequest(final String query, final int cuisineType) {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url ="http://54.175.239.59:8080/search_recipes";
 
@@ -268,7 +257,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                                 recipe.imageUrl = recipes.getJSONObject(i).getString("image_url");
                                 arrayRecipes.add(recipe);
                                 rid.add(recipe.rid);
-                                Log.d("A", recipe.title);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -279,9 +267,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                     }
                 }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                //mTextView.setText("That didn't work!");
-            }
+            public void onErrorResponse(VolleyError error) {}
 
         }) {
             @Override
@@ -289,23 +275,28 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("uid", getUid());
                 params.put("query",query);
-                if (filters[0]) {
-                    params.put("sbp", "True");
-                }
-                else {
-                    params.put("sbp", "False");
-                }
-                if (filters[1]) {
-                    params.put("cuisine", getResources().getStringArray(R.array.cuisine)[cuisineType]);
-                }
-                else {
-                    params.put("cuisine", "");
-                }
-                if (filters[2]) {
-                    params.put("calories", Integer.toString(calories));
-                }
-                else {
-                    params.put("calories", "0");
+                switch (recipeType) {
+                    case -1:
+                        params.put("sbp","false");
+                        params.put("cuisine","");
+                        params.put("calories","0");
+                        break;
+                    case 0:
+                        params.put("sbp","true");
+                        params.put("cuisine","");
+                        params.put("calories","0");
+                        break;
+                    case 1:
+                        params.put("sbp","false");
+                        params.put("cuisine",getResources().getStringArray(R.array.cuisine)[cuisineType]);
+                        params.put("calories","0");
+                        break;
+                    case 2:
+                        params.put("sbp","false");
+                        params.put("cuisine","");
+                        params.put("calories",Integer.toString(calories));
+                        break;
+
                 }
                 return params;
             }
@@ -316,15 +307,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         queue.add(stringRequest);
     }
 
-    public String getIngredients() {
-
-        return "onions, lettuce, tomato";
-    }
-
     public String getUid() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user.getUid();
     }
+
     public void setupBackButton(View view) {
         //overwrites default backbutton
         view.setFocusableInTouchMode(true);
@@ -357,6 +344,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                 String[] tmp = ingList.split(", ");
                 if (tmp.length > 1) {
                     hasIngredients = true;
+                }
+                else {
+                    hasIngredients = false;
                 }
             }
             @Override
