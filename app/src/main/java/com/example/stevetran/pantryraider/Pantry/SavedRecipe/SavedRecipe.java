@@ -70,40 +70,27 @@ public class SavedRecipe {
     }
 
     public static void getRecipesFromFirebase(final Context context,
-                                              final ArrayList<SavedRecipe> recipeList) {
+                                              final ArrayList<SavedRecipe> recipeList,
+                                              final SavedRecipeAdapter adapter) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         String key = SharedConstants.FIREBASE_USER_ID;
-        Log.d(null, "GOT HERE !!!!!!!!");
-        System.out.println("KEYYY: " + key);
 
         mDatabase.child("/Saved_Recipes/").child(key + "/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 try {
-                    System.out.println("Got here 2!!!!!");
-                    Log.d(null, "GOT HERE 2 !!!!!!!!");
-                    // Load data
-                    //JSONObject json = new JSONObject(snapshot.getValue().toString());
-
-                    /*for (int i = 0; i < json.length(); i++) {
-                        JSONObject nextRecipe = json.getJSONObject(i);
-                        System.out.println("SDF " + nextRecipe);
-                    }*/
-
-                    //Iterable<DataSnapshot> ds = ;
                     String ridsListStr = "";
                     for (DataSnapshot child : snapshot.getChildren()) {
                         // Parse recipe ID and use it t
                         int recipeId = Integer.parseInt(child.getKey().substring(1));
                         if(recipeId != -1) {
                             ridsListStr += recipeId + ",";
-                            System.out.println(ridsListStr);
                         }
                     }
                     ridsListStr = ridsListStr.substring(0,ridsListStr.length()-1);
 
-                    getRecipesListInfo(ridsListStr, recipeList, context);
+                    getRecipesListInfo(ridsListStr, recipeList, context, adapter);
                 } catch (Exception e) {
                     e.printStackTrace();;
                 }
@@ -116,7 +103,8 @@ public class SavedRecipe {
 
     private static void getRecipesListInfo(final String ridsListStr,
                                            final ArrayList<SavedRecipe> recipeList,
-                                           final Context context) {
+                                           final Context context,
+                                           final SavedRecipeAdapter adapter) {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url ="http://54.175.239.59:8080/get_recipes_bulk";
 
@@ -148,13 +136,14 @@ public class SavedRecipe {
                                 //recipe.label = recipes.getJSONObject(i).getString("dietLabel");
 
                                 recipeList.add(recipe);
+                                SharedConstants.rids.add(recipe.rid);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
                         ListView savedRecipeList = (ListView) ((FragmentActivity) context).findViewById(R.id.SavedRecipeList);
-                        SavedRecipeAdapter adapter = new SavedRecipeAdapter(((FragmentActivity) context), recipeList);
+                        adapter.setmDataSource(recipeList); //= new SavedRecipeAdapter(((FragmentActivity) context), recipeList);
                         savedRecipeList.setAdapter(adapter);
                     }
                 }, new Response.ErrorListener() {

@@ -39,14 +39,13 @@ import ir.mirrajabi.searchdialog.core.Searchable;
 
 public class MyIngredientsFragment extends Fragment {
     View view;
-    private ListView savedRecipeList;
-    ArrayList<SearchModel> items;
+    private ArrayList<SearchModel> items;
     private HashSet<String> myIngredients;
     private ArrayList<String> myIngredientsList;
     private DatabaseReference mDatabase;
-    ArrayAdapter<String> adapter;
-    HashMap<String, String> gids;
-    String key;
+    private ArrayAdapter<String> adapter;
+    private HashMap<String, String> gids;
+    private String key;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_ingredients, container, false);
         myIngredients = new HashSet<>();

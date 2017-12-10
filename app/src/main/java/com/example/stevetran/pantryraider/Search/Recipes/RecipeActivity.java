@@ -208,6 +208,7 @@ public class RecipeActivity extends AppCompatActivity {
     public  void deleteFromSavedDB() {
         Toast.makeText(RecipeActivity.this, "Recipe Unsaved!",
                 Toast.LENGTH_SHORT).show();
+        SharedConstants.deletedRecipes = rid;
         mDatabase.child("/Saved_Recipes/" + key + "/").child("r"+rid).removeValue();
         saveButton.setText("Save Recipe");
         isCurrentlySaved = false;
