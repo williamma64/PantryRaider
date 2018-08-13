@@ -6,8 +6,7 @@ to create an application based on an idea the team wanted to pursue. My team, Su
 ingredients you already had to find recipes that you could readily make. There were other features to this app as well such as
 dietary preference filters, personal account creation, recipe search, and others.
 
-### Currently, this app is decommissioned because the Firebase database account has been deleted and the recipe server is no longer
-running.
+### Currently, this app is decommissioned because the Firebase database account has been deleted and the recipe server is no longer running.
 
 I personally contributed to the Ingredients and Pantry portions of the app.
 
